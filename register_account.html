@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function(){
+            $("#register").click(function(){
+                console.log('registering')
+                var registerPath = 'https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/GTMLogin/register'
+                $.post(registerPath,
+                    {userid: $("#uname").val(), password: $("#pword").val()},
+                    function(data,status){
+                        alert("Register " + status);
+                        window.location.href = './login.html';
+                    });
+            });
+        });
+
+    </script>
+
     <head>
     </head>
     <body>
 
-		<form action="/action_page.php">
-			Email (@gatech.edu): <input type="text" name="email" value="JohnDoe87@gatech.edu"><br>
-			First Name: <input type="text" name="fname" value="John"><br>
-			Last Name: <input type="text" name="lname" value="Doe"><br>
-			Password (8 characters, 1 number, 1 symbol): <input type="text" name="pass" value="mrsmooth"><br>
-			Confirm Password: <input type="text" name="cpass" value="mrsmooth"><br>
-			<input type="submit" value="Register">
+		<form action="#" onsubmit="">
+			Email (@gatech.edu): <input type="text" id="uname" value=""><br>
+			<!-- First Name: <input type="text" name="fname" value="John"><br>
+			Last Name: <input type="text" name="lname" value="Doe"><br> -->
+			Password (8 characters, 1 number, 1 symbol): <input type="password" id="pword" value=""><br>
+			<!-- Confirm Password: <input type="text" name="cpass" value="mrsmooth"><br> -->
+			<button type="submit" id="register" value="Register">Register</button>
 		</form>
-
-
     </body>
 
 </html>
-<li>

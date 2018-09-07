@@ -8,8 +8,84 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
 
+            var getUrlParameter = function getUrlParameter(sParam) {
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
 
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
+
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : sParameterName[1];
+                    }
+                }
+            };
+
+            $(document).ready(function(){
+                var hastoken = checkCookie("token")
+                console.log(hastoken)
+                if(!hastoken) {
+                    console.log(getUrlParameter('uname1'))
+                    var username = getUrlParameter('uname1')
+                    var password = getUrlParameter('pwd1')
+                    var loginPath = 'https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/GTMLogin/login'
+                    if(username && password){
+                        $.post(loginPath,
+                            {userid: username, password: password},
+                            function(data,status){
+                                //alert("login " + data);
+                                if(data == 'failed') {
+                                    alert("Login failed")
+                                } else {
+                                    setCookie("token", data, 7);
+                                    window.location.href = './index.html';
+
+                                }
+
+                        });
+                    }
+                } else {
+                    window.location.href = './index.html';
+                }
+            });
+
+            function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires="+d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for(var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            function checkCookie() {
+                var token = getCookie("token");
+                if (token !== "") {
+                    return true
+                } else {
+                    return false
+                }
+            }
+
+        </script>
     </head>
     <body>
         <div class="container">
@@ -21,7 +97,7 @@
                             <h3 class="mb-0">Sign In</h3>
                         </div>
                         <div class="card-body" >
-                            <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
+                            <form action="#" onsubmit="">
                                 <div class="form-group">
                                     <label for="uname1">Username</label>
                                     <input type="text" class="form-control form-control-lg rounded-0" name="uname1" id="uname1" required="">
@@ -29,7 +105,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input type="password" class="form-control form-control-lg rounded-0" id="pwd1" required="" autocomplete="new-password">
+                                    <input type="password" class="form-control form-control-lg rounded-0" name="pwd1" id="pwd1" required="" autocomplete="">
                                     <div class="invalid-feedback">Enter your password too!</div>
                                 </div>
                                 <div class="form-check">
@@ -38,7 +114,7 @@
                                         Remember Me!
                                     </label>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-lg float-right" id="btnLogin">Login</button>
+                                <button class="btn btn-primary btn-lg float-right" id="Login">Login</button>
                             </form>
                         </div>
                         <!--/card-block-->
@@ -48,4 +124,8 @@
             </div>
         </div>
     </body>
+
+
+
+
 </html>
