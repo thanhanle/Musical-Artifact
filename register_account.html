@@ -9,7 +9,7 @@
                 console.log('registering')
                 var registerPath = 'https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/GTMLogin/register'
                 $.post(registerPath,
-                    {userid: $("#uname").val(), password: $("#pword").val()},
+                    {userid: $("#uname1").val(), password: $("#pwd1").val()},
                     function(data,status){
                         alert("Register " + status);
                         window.location.href = './login.html';
@@ -30,48 +30,38 @@
     </head>
     <body>
 
-    <div class="container">
+        <div class="container">
 
-        <div class="row justify-content-center align-items-center">
-            <div class="col-4" id="" >
-                <div class="card rounded-0">
-                    <div class="card-header">
-                        <h3 class="mb-0">Register Here!</h3>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-4" id="" >
+                    <div class="card rounded-0">
+                        <div class="card-header">
+                            <h3 class="mb-0">Register Here!</h3>
+                        </div>
+                        <div class="card-body" >
+                            <form action="#" onsubmit="">
+                                <div class="form-group">
+                                    <label for="uname1">Email (@gatech.edu)</label>
+                                    <input type="text" class="form-control form-control-lg rounded-0" name="uname1" id="uname1" required="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Create a Password</label>
+                                    <input type="password" class="form-control form-control-lg rounded-0" name="pwd1" id="pwd1" required="" autocomplete="">
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm Your Password</label>
+                                    <input type="password" class="form-control form-control-lg rounded-0" name="cpwd1" id="cpwd1" required="" autocomplete="">
+
+                                </div>
+                                <button class="btn btn-primary btn-lg float-right" id="register">Register</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="card-body" >
-                        <form action="#" onsubmit="">
-                            <div class="form-group">
-                                <label for="uname1">Email (@gatech.edu)</label>
-                                <input type="text" class="form-control form-control-lg rounded-0" name="uname1" id="uname1" required="">
-                            </div>
-                            <div class="form-group">
-                                <label>Create a Password</label>
-                                <input type="password" class="form-control form-control-lg rounded-0" name="pwd1" id="pwd1" required="" autocomplete="">
-
-                            </div>
-                            <div class="form-group">
-                                <label>Confirm Your Password</label>
-                                <input type="password" class="form-control form-control-lg rounded-0" name="pwd1" id="pwd1" required="" autocomplete="">
-
-                            </div>
-                            <button class="btn btn-primary btn-lg float-right" id="register">Register</button>
-                        </form>
-                    </div>
-                    <!--/card-block-->
                 </div>
+
             </div>
-
         </div>
-    </div>
-
-		<form action="#" onsubmit="">
-			Email (@gatech.edu): <input type="text" id="uname" value=""><br>
-			<!-- First Name: <input type="text" name="fname" value="John"><br>
-			Last Name: <input type="text" name="lname" value="Doe"><br> -->
-			Password (8 characters, 1 number, 1 symbol): <input type="password" id="pword" value=""><br>
-			<!-- Confirm Password: <input type="text" name="cpass" value="mrsmooth"><br> -->
-			<button type="submit" id="register" value="Register">Register</button>
-		</form>
     </body>
 
 </html>

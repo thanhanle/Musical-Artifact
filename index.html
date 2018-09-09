@@ -2,7 +2,45 @@
 <html lang="en">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-            //alert(document.cookie)
+        $(document).ready(function(){
+            if(!checkCookie()) {
+                window.location = "./login.html"
+            } else {
+                var token = getCookie("token")
+                console.log(token)
+                $("#user").html("<a>" + token + "</a>")
+                $("#user").attr({
+                    "href" : null,
+                });
+                $("#register").html(null)
+
+            }
+        });
+
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            var token = getCookie("token");
+            if (token !== "") {
+                return true
+            } else {
+                return false
+            }
+        }
     </script>
 
     <head>
@@ -13,9 +51,9 @@
         Georgia Tech Music Sharing Service
 
 		<div class="topnav">
-		  <li><a href="login.html">Login</a>
-		  <li><a href="register_account.html">Register</a>
-          <li><a href="logout.html">Logout</a>
+		  <li><a href="login.html" id="user">Login</a>
+		  <li><a href="register_account.html" id="register">Register</a>
+          <li><a href="logout.html" id="logout">Logout</a>
 		</div>
 
 
