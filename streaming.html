@@ -7,15 +7,95 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires="+d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function checkCookie() {
+            var token = getCookie("token");
+            if (token !== "") {
+                return true
+            } else {
+                return false
+            }
+        }
 
         $(document).ready(function(){
+
+            if(!checkCookie()) {
+                window.location = "./login.html"
+            } else {
+                var token = getCookie("token")
+                state = getUrlParameter("state")
+                if(state == "spotifyLogin" && getUrlParameter("code") !== "") {
+                    var linkPath = 'https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/GTMLogin/linkspotify'
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            if(this.responseText == 'failed') {
+                                alert("Link failed, please login again")
+                                setCookie("token", "", 0)
+                                window.location.href = './login.html';
+                            } else {
+                                //spotify link success
+                                alert("Spotify link successful")
+                                window.location.href = './index.html';
+                            }
+                        }
+                    };
+                    xhttp.open("POST", linkPath, true);
+                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhttp.send("token=" + token + "&code=" + getUrlParameter("code") + "&redirect_uri=" + window.location.href);
+                }
+            }
+
+
+
             $("#continue").click(function(){
-                window.location.href = './login.html';
+                window.location.href = './index.html';
             });
+
+            $("#spotify").click(function(){
+
+                var scope = 'user-read-private user-read-email user-read-recently-played user-read-currently-playing';
+                var client_id = 'afce36398bc1443f8f5c5577547bcaf2'
+                window.location.href = "https://accounts.spotify.com/authorize?response_type=code&client_id="+ client_id +"&scope="+ scope +"&redirect_uri="+ window.location.href + "&state=spotifyLogin"
+            });
+
         });
 
     </script>
@@ -28,8 +108,8 @@
                 <div class="form-group">
                     <label>Select Your Music Service</label>
 
-                    <label class="form-check-label">
-                        <img src="images/spotify.png"/>
+                    <label class="btn form-check-label">
+                        <img id="spotify" src="images/spotify.png"/>
                     </label>
                 </div>
                 <div class="form-group">
