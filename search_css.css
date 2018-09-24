@@ -1,0 +1,15 @@
+#search_container{
+    margin-top:20%; /* EDIT */
+}
+.input-group .input-group-addon{
+    background: white !important;
+}
+.input-group .form-control{
+    border-right:0;
+    box-shadow:0 0 0;
+    border-color:#ccc;
+}
+.input-group button{
+    border:0;
+    background:transparent;
+}
