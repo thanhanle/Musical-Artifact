@@ -1,0 +1,2 @@
+POST https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/gtmsongs/post
+data="token=1123123..1231231&songsID=1234&emotion=happy"
