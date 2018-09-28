@@ -1,7 +1,8 @@
 const AWS = require('aws-sdk');
 var dynamodb = new AWS.DynamoDB();
 var querystring = require('querystring');
-//var request = require('request')
+
+var request = require('request')
 
 var client_id = 'afce36398bc1443f8f5c5577547bcaf2'; // Your client id
 var client_secret = 'a31626817ad54c6ba4849dc593b868b7'; // Your secret
@@ -87,7 +88,7 @@ exports.handler = (event, context, callback) => {
     if(event.path == "/gtmsongs/search") {
         handleSearch(event, callback)
     } else if(event.path == "/gtmsongs/post") {
-        //handlePost(event, callback)
+        handlePost(event, callback)
     } else if(event.path == "/gtmsongs/topCharts") {
         handleTopCharts(event, callback)
     } else {
@@ -99,7 +100,7 @@ exports.handler = (event, context, callback) => {
 function handleSearch(event, callback) {
     var data = querystring.parse(event.body);
     var token = data.token
-    var searchQuery = data.search
+    var searchQuery = data.searchQuery
 
     //first we gotta make sure theres a user logged in with the token
     var params = {
@@ -131,35 +132,34 @@ function handleSearch(event, callback) {
         } else {
             if(data["Count"] == 1) {
                 console.log("found userid: " + data["Items"][0].userid.S)
-                console.log("found spotifyToken: " + data["Items"][0].spotifyInfo.access_token.S)
-                checkIfValid(data["Items"][0].spotifyInfo, function(access_token) {
+                console.log("found spotifyToken: " + JSON.stringify(data["Items"][0].spotifyInfo.M.access_token.S))
+                checkIfValid(data["Items"][0].userid.S, data["Items"][0].spotifyInfo.M, function(access_token) {
+                    console.log("MAKING REQUEST WITH ACCESS TOKEN: " + access_token)
                     var options = {
                       url: "https://api.spotify.com/v1/search?q=" + searchQuery + "&type=track&market=US&limit=10",
                       headers: {
-                        'User-Agent': 'request'
+                        'Authorization': 'Bearer ' + access_token
                       }
                     };
 
-                    function callback(error, response, body) {
+                    function reqcallback(error, response, body) {
                       if (!error && response.statusCode == 200) {
                         var info = JSON.parse(body);
-                        console.log(info.stargazers_count + " Stars");
-                        console.log(info.forks_count + " Forks");
+                        console.log(body);
+                        response = {
+                            statusCode: 200,
+                            headers: {
+                                "Access-Control-Allow-Origin" : "*",
+                                'Content-Type' : 'text/html'
+                            },
+                            body: body //songID
+                        };
+                        callback(null, response);
                       }
                     }
 
-                    //request.get(options, callback);
-                    //request.get("https://api.spotify.com/v1/search?q=mala%20mia&type=track&market=US&limit=1")
+                    request.get(options, reqcallback);
                 })
-                response = {
-                    statusCode: 200,
-                    headers: {
-                        "Access-Control-Allow-Origin" : "*",
-                        'Content-Type' : 'text/html'
-                    },
-                    body: "12345" //songID
-                };
-                callback(null, response);
             } else {
                 response = {
                     statusCode: 200,
@@ -178,21 +178,94 @@ function handleSearch(event, callback) {
 }
 
 
-function checkIfValid(spotifyInfo, callback) {
-    if (Date.now() > parseInt(spotifyInfo.expiresAt.N)) {
+function checkIfValid(userid, spotifyInfo, callback) {
+    if (Date.now() < parseInt(spotifyInfo.expiresAt.N)) {
+        callback(spotifyInfo.access_token.S)
+    } else {
+        var refresh_token = spotifyInfo.refresh_token.S;
+        var authOptions = {
+          url: 'https://accounts.spotify.com/api/token',
+          headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+          form: {
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token
+          },
+          json: true
+        };
 
+        request.post(authOptions, function(error, response, body) {
+          if (!error && response.statusCode === 200) {
+            var access_token = body.access_token;
+            var expiresAt = Date.now() + body.expires_in;
+            updateSpotifyToken(userid, spotifyInfo, access_token, expiresAt, callback)
+          }
+        });
     }
+}
+
+function updateSpotifyToken(username, oldspotifyInfo, access_token, expiresAt, callback) {
+    var params = {
+        ExpressionAttributeNames: {
+            "#C": "spotifyInfo"
+        },
+        ExpressionAttributeValues: {
+            ":r": {
+                S: oldspotifyInfo.refresh_token.S
+            },
+            ":a": {
+                S: access_token
+            },
+            ":x": {
+                N: "" + expiresAt
+            }
+        },
+        Key: {
+            "userid": {
+                S: username
+            },
+        },
+        ReturnValues: "UPDATED_NEW",
+        TableName: "MusicUsers",
+        UpdateExpression: "SET #C.refresh_token = :r, #C.access_token = :a, #C.expiresAt = :x"
+    };
+
+    dynamodb.updateItem(params, function(err, data) {
+        if (err) {
+            console.log(err)
+            callback('failed')
+        } else {
+            callback(access_token)
+        }
+    });
 }
 
 function handleTopCharts(event, callback) {
     console.log("HANDLE TOP CHARTS")
+
+    let scanningParameters = {
+        TableName:'topChart',
+        Limit: 100
+    };
+
+    dynamodb.scan(scanningParameters, function(err, data) {
+        // if (err) {
+        //     callback(err, null);
+        // } else {
+        //     callback(null, data);
+        // }
+        console.log(data);
+    });
+}
+
+function handlePost(event, callback) {
     var response = {
         statusCode: 200,
         headers: {
             "Access-Control-Allow-Origin" : "*",
             'Content-Type' : 'text/html'
         },
-        body: JSON.stringify(JSON_RESPONSE_DATA)
+        body: "success"
     };
+
     callback(null, response);
 }
