@@ -13,3 +13,12 @@
     border:0;
     background:transparent;
 }
+
+#emote {
+    height: 25px;
+    width: 25px;
+}
+
+#emoteRadio {
+    margin-left: 25px;
+}

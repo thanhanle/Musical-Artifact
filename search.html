@@ -9,9 +9,15 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 
     <script>
         $(document).ready(function() {
+            var songID;
             $("#Search").click(function () {
                 console.log('searchin');
                 var ul = document.createElement('ul');
@@ -33,8 +39,58 @@
                     a.innerHTML = element.title;
                     a.onclick = function () {
                         console.log(element.id);
+                        songID = element.id;
+
                     }
                 }
+                function getCookie(cname) {
+                    var name = cname + "=";
+                    var ca = document.cookie.split(';');
+                    for(var i = 0; i < ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == ' ') {
+                            c = c.substring(1);
+                        }
+                        if (c.indexOf(name) == 0) {
+                            return c.substring(name.length, c.length);
+                        }
+                    }
+                    return "";
+                }
+
+                $("#post").click(function () {
+                    var postPath = 'https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/gtmsongs/post'
+                    var radios = document.getElementsByName('emotions');
+                    var emotionVote;
+                    var token = getCookie("token");
+                    for (var i = 0, length = radios.length; i < length; i++) {
+                        if (radios[i].checked) {
+                            emotionVote = radios[i].value;
+                            break;
+                        }
+                    }
+                    console.log(emotionVote);
+                    console.log(songID);
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange =  function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            if(this.responseText == 'failed') {
+                                alert("Failed")
+
+                            } else {
+                                setCookie("token", this.responseText, 7);
+                                window.location.href = './index.html';
+                            }
+                        } else if(this.readyState == 4 && this.status == 404) {
+                            alert("Failed")
+                            document.getElementById("Login").innerHTML = "Login";
+                        }
+                    }
+                    xhttp.open("POST", postPath, true);
+                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhttp.send("token=" + token + "&songID=" + songID + "&emotion=" + emotionVote);
+
+                })
 
             })
 
@@ -105,18 +161,48 @@
                         <div class="input-group input-group">
                             <input type="text" class="form-control"  placeholder="Search" >
                             <span class="input-group-addon">
-                            <button type="submit" id="Search">
+                            <button type="submit" id="Search" >
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </span>
                         </div>
-                        <div id="search_data">
+                        <div id="search_data" data-toggle="modal" data-target="#searchModal">
 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">How Do You Feel About This Song?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" value="happy" id="happy" name="emotions">
+                            <label class="custom-control-label" for="happy"><img id="emote" src="images/happy.svg"></label>
+                        </div>
+
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" value= "sad" id="sad" name="emotions" checked>
+                            <label class="custom-control-label" for="sad"><img id="emote" src="images/sad.svg"></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="post" data-dismiss="modal">Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </body>
 </html>
