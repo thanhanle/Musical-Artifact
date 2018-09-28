@@ -14,7 +14,7 @@ exports.handler = (event, context, callback) => {
     } else if(event.path == "/GTMLogin/register") {
         registerUser(event, callback)
     } else if(event.path == "/GTMLogin/linkspotify") {
-        console.log("LInking Spoadasidjlaidwuhf")
+        console.log("Linking spotify")
         linkSpotify(event, callback)
     } else {
         //handle(event, callback)

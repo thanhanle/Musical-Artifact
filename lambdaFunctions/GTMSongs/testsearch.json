@@ -1,0 +1,260 @@
+{
+  "tracks": {
+    "href": "https://api.spotify.com/v1/search?query=i+love+it&type=track&market=US&offset=0&limit=3",
+    "items": [
+      {
+        "album": {
+          "album_type": "single",
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/5K4W6rqBFWDnAN6FQUkS6x"
+              },
+              "href": "https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x",
+              "id": "5K4W6rqBFWDnAN6FQUkS6x",
+              "name": "Kanye West",
+              "type": "artist",
+              "uri": "spotify:artist:5K4W6rqBFWDnAN6FQUkS6x"
+            },
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3wyVrVrFCkukjdVIdirGVY"
+              },
+              "href": "https://api.spotify.com/v1/artists/3wyVrVrFCkukjdVIdirGVY",
+              "id": "3wyVrVrFCkukjdVIdirGVY",
+              "name": "Lil Pump",
+              "type": "artist",
+              "uri": "spotify:artist:3wyVrVrFCkukjdVIdirGVY"
+            }
+          ],
+          "external_urls": {
+            "spotify": "https://open.spotify.com/album/185Tm1g5U7eMOrm3m9SQUh"
+          },
+          "href": "https://api.spotify.com/v1/albums/185Tm1g5U7eMOrm3m9SQUh",
+          "id": "185Tm1g5U7eMOrm3m9SQUh",
+          "images": [
+            {
+              "height": 640,
+              "url": "https://i.scdn.co/image/67a6a4e49285e1983e771811fcb463b4422d0e5d",
+              "width": 640
+            },
+            {
+              "height": 300,
+              "url": "https://i.scdn.co/image/e661a3ef9ac3b96693c1c2447908b7ed8f19dd30",
+              "width": 300
+            },
+            {
+              "height": 64,
+              "url": "https://i.scdn.co/image/ad059b63dc699dacd689b2dac7dfa84bde54d3ea",
+              "width": 64
+            }
+          ],
+          "name": "I Love It",
+          "release_date": "2018-09-07",
+          "release_date_precision": "day",
+          "total_tracks": 1,
+          "type": "album",
+          "uri": "spotify:album:185Tm1g5U7eMOrm3m9SQUh"
+        },
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/5K4W6rqBFWDnAN6FQUkS6x"
+            },
+            "href": "https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x",
+            "id": "5K4W6rqBFWDnAN6FQUkS6x",
+            "name": "Kanye West",
+            "type": "artist",
+            "uri": "spotify:artist:5K4W6rqBFWDnAN6FQUkS6x"
+          },
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/3wyVrVrFCkukjdVIdirGVY"
+            },
+            "href": "https://api.spotify.com/v1/artists/3wyVrVrFCkukjdVIdirGVY",
+            "id": "3wyVrVrFCkukjdVIdirGVY",
+            "name": "Lil Pump",
+            "type": "artist",
+            "uri": "spotify:artist:3wyVrVrFCkukjdVIdirGVY"
+          }
+        ],
+        "disc_number": 1,
+        "duration_ms": 127946,
+        "explicit": true,
+        "external_ids": {
+          "isrc": "USUM71814031"
+        },
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/4S8d14HvHb70ImctNgVzQQ"
+        },
+        "href": "https://api.spotify.com/v1/tracks/4S8d14HvHb70ImctNgVzQQ",
+        "id": "4S8d14HvHb70ImctNgVzQQ",
+        "is_local": false,
+        "is_playable": true,
+        "name": "I Love It (& Lil Pump)",
+        "popularity": 96,
+        "preview_url": null,
+        "track_number": 1,
+        "type": "track",
+        "uri": "spotify:track:4S8d14HvHb70ImctNgVzQQ"
+      },
+      {
+        "album": {
+          "album_type": "album",
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/6roFdX1y5BYSbp60OTJWMd"
+              },
+              "href": "https://api.spotify.com/v1/artists/6roFdX1y5BYSbp60OTJWMd",
+              "id": "6roFdX1y5BYSbp60OTJWMd",
+              "name": "Tim McGraw",
+              "type": "artist",
+              "uri": "spotify:artist:6roFdX1y5BYSbp60OTJWMd"
+            }
+          ],
+          "external_urls": {
+            "spotify": "https://open.spotify.com/album/6l9E1hjtJqivhVIageAWM8"
+          },
+          "href": "https://api.spotify.com/v1/albums/6l9E1hjtJqivhVIageAWM8",
+          "id": "6l9E1hjtJqivhVIageAWM8",
+          "images": [
+            {
+              "height": 640,
+              "url": "https://i.scdn.co/image/5b01cbeb3f09cfe636c978cfd0c9ecdda13139f5",
+              "width": 640
+            },
+            {
+              "height": 300,
+              "url": "https://i.scdn.co/image/e838c7e62a0b99c8e3cb62efe0f4a62d17ffb7d6",
+              "width": 300
+            },
+            {
+              "height": 64,
+              "url": "https://i.scdn.co/image/07d2820f76a9b260a11662984a4f9f867756d62c",
+              "width": 64
+            }
+          ],
+          "name": "All I Want",
+          "release_date": "1995-08-15",
+          "release_date_precision": "day",
+          "total_tracks": 12,
+          "type": "album",
+          "uri": "spotify:album:6l9E1hjtJqivhVIageAWM8"
+        },
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/6roFdX1y5BYSbp60OTJWMd"
+            },
+            "href": "https://api.spotify.com/v1/artists/6roFdX1y5BYSbp60OTJWMd",
+            "id": "6roFdX1y5BYSbp60OTJWMd",
+            "name": "Tim McGraw",
+            "type": "artist",
+            "uri": "spotify:artist:6roFdX1y5BYSbp60OTJWMd"
+          }
+        ],
+        "disc_number": 1,
+        "duration_ms": 205706,
+        "explicit": false,
+        "external_ids": {
+          "isrc": "USCRB0000762"
+        },
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/3IvcWWehbBcBR4YZxlGM9R"
+        },
+        "href": "https://api.spotify.com/v1/tracks/3IvcWWehbBcBR4YZxlGM9R",
+        "id": "3IvcWWehbBcBR4YZxlGM9R",
+        "is_local": false,
+        "is_playable": true,
+        "name": "I Like It, I Love It",
+        "popularity": 62,
+        "preview_url": "https://p.scdn.co/mp3-preview/6f73ee585dc5c2722e150fc5ecf527cdf4256b3d?cid=774b29d4f13844c495f206cafdad9c86",
+        "track_number": 7,
+        "type": "track",
+        "uri": "spotify:track:3IvcWWehbBcBR4YZxlGM9R"
+      },
+      {
+        "album": {
+          "album_type": "album",
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/58MLl9nC29IXbE4nEtuoP2"
+              },
+              "href": "https://api.spotify.com/v1/artists/58MLl9nC29IXbE4nEtuoP2",
+              "id": "58MLl9nC29IXbE4nEtuoP2",
+              "name": "Alex & Sierra",
+              "type": "artist",
+              "uri": "spotify:artist:58MLl9nC29IXbE4nEtuoP2"
+            }
+          ],
+          "external_urls": {
+            "spotify": "https://open.spotify.com/album/3Yk19X5zgXDSrG8uqrPnXC"
+          },
+          "href": "https://api.spotify.com/v1/albums/3Yk19X5zgXDSrG8uqrPnXC",
+          "id": "3Yk19X5zgXDSrG8uqrPnXC",
+          "images": [
+            {
+              "height": 636,
+              "url": "https://i.scdn.co/image/156055efa74d87ebefe81561bb6c9adfe4f71365",
+              "width": 640
+            },
+            {
+              "height": 298,
+              "url": "https://i.scdn.co/image/c89f1f11e38a2f6853e61c6d040a8a4b6ef68530",
+              "width": 300
+            },
+            {
+              "height": 64,
+              "url": "https://i.scdn.co/image/749ebcd143eafe5f3c356cbe775627acbe22a506",
+              "width": 64
+            }
+          ],
+          "name": "It's About Us",
+          "release_date": "2014-10-06",
+          "release_date_precision": "day",
+          "total_tracks": 13,
+          "type": "album",
+          "uri": "spotify:album:3Yk19X5zgXDSrG8uqrPnXC"
+        },
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/58MLl9nC29IXbE4nEtuoP2"
+            },
+            "href": "https://api.spotify.com/v1/artists/58MLl9nC29IXbE4nEtuoP2",
+            "id": "58MLl9nC29IXbE4nEtuoP2",
+            "name": "Alex & Sierra",
+            "type": "artist",
+            "uri": "spotify:artist:58MLl9nC29IXbE4nEtuoP2"
+          }
+        ],
+        "disc_number": 1,
+        "duration_ms": 229640,
+        "explicit": false,
+        "external_ids": {
+          "isrc": "USSM11404190"
+        },
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/2ELVVIbpucfOqGFC21Q4yR"
+        },
+        "href": "https://api.spotify.com/v1/tracks/2ELVVIbpucfOqGFC21Q4yR",
+        "id": "2ELVVIbpucfOqGFC21Q4yR",
+        "is_local": false,
+        "is_playable": true,
+        "name": "I Love You",
+        "popularity": 66,
+        "preview_url": "https://p.scdn.co/mp3-preview/89c073fc91840d09ae0059d02543ae7d21b56d2a?cid=774b29d4f13844c495f206cafdad9c86",
+        "track_number": 10,
+        "type": "track",
+        "uri": "spotify:track:2ELVVIbpucfOqGFC21Q4yR"
+      }
+    ],
+    "limit": 3,
+    "next": "https://api.spotify.com/v1/search?query=i+love+it&type=track&market=US&offset=3&limit=3",
+    "offset": 0,
+    "previous": null,
+    "total": 11021
+  }
+}
