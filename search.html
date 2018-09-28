@@ -16,16 +16,52 @@
 
 
     <script>
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
         $(document).ready(function() {
             var songID;
+            var searchQuery;
             $("#Search").click(function () {
+                var searchPath = 'https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/gtmsongs/search'
                 console.log('searchin');
                 var ul = document.createElement('ul');
                 ul.setAttribute('id', 'songList');
                 var t;
-
+                var token = getCookie('token');
                 document.getElementById('search_data').appendChild(ul);
                 songData.Songs.forEach(songListing);
+                searchQuery = document.getElementById("search_input").value;
+                console.log(searchQuery);
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange =  function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        if(this.responseText == 'failed') {
+                            alert("Failed")
+
+                        } else {
+                            alert(this.responseText)
+                        }
+                    } else if(this.readyState == 4 && this.status == 404) {
+                        alert("Failed")
+                        document.getElementById("Login").innerHTML = "Login";
+                    }
+                }
+                xhttp.open("POST", searchPath, true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("token=" + token + "&searchQuery=" + searchQuery);
 
                 function songListing(element, index, arr) {
                     var li = document.createElement('li');
@@ -43,53 +79,39 @@
 
                     }
                 }
-                function getCookie(cname) {
-                    var name = cname + "=";
-                    var ca = document.cookie.split(';');
-                    for(var i = 0; i < ca.length; i++) {
-                        var c = ca[i];
-                        while (c.charAt(0) == ' ') {
-                            c = c.substring(1);
-                        }
-                        if (c.indexOf(name) == 0) {
-                            return c.substring(name.length, c.length);
-                        }
+
+            })
+
+            $("#post").click(function () {
+                var postPath = 'https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/gtmsongs/post'
+                var radios = document.getElementsByName('emotions');
+                var emotionVote;
+                var token = getCookie("token");
+                for (var i = 0, length = radios.length; i < length; i++) {
+                    if (radios[i].checked) {
+                        emotionVote = radios[i].value;
+                        break;
                     }
-                    return "";
                 }
-
-                $("#post").click(function () {
-                    var postPath = 'https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/gtmsongs/post'
-                    var radios = document.getElementsByName('emotions');
-                    var emotionVote;
-                    var token = getCookie("token");
-                    for (var i = 0, length = radios.length; i < length; i++) {
-                        if (radios[i].checked) {
-                            emotionVote = radios[i].value;
-                            break;
-                        }
-                    }
-                    console.log(emotionVote);
-                    console.log(songID);
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange =  function () {
-                        if (this.readyState == 4 && this.status == 200) {
-                            if(this.responseText == 'failed') {
-                                alert("Failed")
-
-                            } else {
-                                window.location.href = './index.html';
-                            }
-                        } else if(this.readyState == 4 && this.status == 404) {
+                console.log(emotionVote);
+                console.log(songID);
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange =  function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        if(this.responseText == 'failed') {
                             alert("Failed")
-                            document.getElementById("Login").innerHTML = "Login";
-                        }
-                    }
-                    xhttp.open("POST", postPath, true);
-                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    xhttp.send("token=" + token + "&songID=" + songID + "&emotion=" + emotionVote);
 
-                })
+                        } else {
+                            window.location.href = './index.html';
+                        }
+                    } else if(this.readyState == 4 && this.status == 404) {
+                        alert("Failed")
+                        document.getElementById("Login").innerHTML = "Login";
+                    }
+                }
+                xhttp.open("POST", postPath, true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("token=" + token + "&songID=" + songID + "&emotion=" + emotionVote);
 
             })
 
@@ -158,7 +180,7 @@
                 <div class="col-sm-6 col-sm-offset-3">
                     <div id="search_container">
                         <div class="input-group input-group">
-                            <input type="text" class="form-control"  placeholder="Search" >
+                            <input type="text" class="form-control" id="search_input"  placeholder="Search" >
                             <span class="input-group-addon">
                             <button type="submit" id="Search" >
                                 <span class="glyphicon glyphicon-search"></span>
