@@ -6,81 +6,6 @@ var request = require('request')
 
 var client_id = 'afce36398bc1443f8f5c5577547bcaf2'; // Your client id
 var client_secret = 'a31626817ad54c6ba4849dc593b868b7'; // Your secret
-var JSON_RESPONSE_DATA = {
-    "Count" : 10,
-    "Songs" : [
-        {
-            "id" : 12345,
-            "title" : "I love it",
-            "artist" : "Kanye West",
-            "votes" : 20,
-            "emotion" : "happy"
-        },
-        {
-            "id" : 12345,
-            "title" : "I love it",
-            "artist" : "Kanye West",
-            "votes" : 20,
-            "emotion" : "happy"
-        },
-        {
-            "id" : 12345,
-            "title" : "I love it",
-            "artist" : "Kanye West",
-            "votes" : 20,
-            "emotion" : "happy"
-        },
-        {
-            "id" : 12345,
-            "title" : "I love it",
-            "artist" : "Kanye West",
-            "votes" : 20,
-            "emotion" : "happy"
-        },
-        {
-            "id" : 12345,
-            "title" : "I love it",
-            "artist" : "Kanye West",
-            "votes" : 20,
-            "emotion" : "happy"
-        },
-        {
-            "id" : 12345,
-            "title" : "I love it",
-            "artist" : "Kanye West",
-            "votes" : 20,
-            "emotion" : "happy"
-        },
-        {
-            "id" : 12345,
-            "title" : "I love it",
-            "artist" : "Kanye West",
-            "votes" : 20,
-            "emotion" : "happy"
-        },
-        {
-            "id" : 12345,
-            "title" : "I love it",
-            "artist" : "Kanye West",
-            "votes" : 20,
-            "emotion" : "happy"
-        },
-        {
-            "id" : 12345,
-            "title" : "I love it",
-            "artist" : "Kanye West",
-            "votes" : 20,
-            "emotion" : "happy"
-        },
-        {
-            "id" : 12345,
-            "title" : "I love it",
-            "artist" : "Kanye West",
-            "votes" : 20,
-            "emotion" : "happy"
-        }
-    ]
-}
 
 
 exports.handler = (event, context, callback) => {
@@ -253,7 +178,30 @@ function handleTopCharts(event, callback) {
         // } else {
         //     callback(null, data);
         // }
-        console.log(data);
+        var returnJSON = {
+            Count: data.Count,
+            Songs: [],
+        }
+        for(var i = 0; i < data.Count; i++) {
+            var songJSON = {
+                id: data.Items[i].SongID.S,
+                artist: data.Items[i].Title.S,
+                title: data.Items[i].Artist.S,
+                votes: data.Items[i].Points.N,
+                emotion: data.Items[i].Emotion.S,
+            }
+            returnJSON.Songs.push(songJSON)
+        }
+
+        var response = {
+            statusCode: 200,
+            headers: {
+                "Access-Control-Allow-Origin" : "*",
+                'Content-Type' : 'text/html'
+            },
+            body: JSON.stringify(returnJSON) //songID
+        };
+        callback(null, response);
     });
 }
 
