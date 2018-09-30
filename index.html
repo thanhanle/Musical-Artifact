@@ -40,23 +40,20 @@
                             votes.innerHTML = data.Songs[i].votes
                             var emotions = document.createElement('td')
                             emotions.innerHTML = data.Songs[i].emotion
-
-                            var edit = document.createElement('td')
+                            var share = document.createElement('td')
                             // var newP = document.createElement('p')
                             // newP.setAttribute('data-placement', "top") 
                             //newP.setAttribute('data-toggle', "tooltip")
                             //newP.setAttribute('title', "Edit")
 
-                            var deletes = document.createElement('td')
-                            // deletes.innerHTML = data[i][3]
 
                             newRow.appendChild(trackNumber)
                             newRow.appendChild(title)
                             newRow.appendChild(artist)
                             newRow.appendChild(votes)
                             newRow.appendChild(emotions)
-                            newRow.appendChild(edit)
-                            newRow.appendChild(deletes)
+                            newRow.appendChild(share)
+
 
                             rows.append(newRow);
                         }
@@ -123,26 +120,26 @@
 
     <body>
 
-        <style>
-            .pagination {
-                display: inline-block;
-            }
-            .pagination a {
-                color: black;
-                float: left;
-                padding: 8px 16px;
-                text-decoration: none;
-                transition: background-color .3s;
-                border: 1px solid #ddd;
-            }
-            .pagination a.active {
-                background-color: #4CAF50;
-                color: white;
-                border: 1px solid #4CAF50;
-            }
-            .pagination a:hover:not(.active) {background-color: #ddd;}
-        </style>
-        
+        <!--<style>-->
+            <!--.pagination {-->
+                <!--display: inline-block;-->
+            <!--}-->
+            <!--.pagination a {-->
+                <!--color: black;-->
+                <!--float: left;-->
+                <!--padding: 8px 16px;-->
+                <!--text-decoration: none;-->
+                <!--transition: background-color .3s;-->
+                <!--border: 1px solid #ddd;-->
+            <!--}-->
+            <!--.pagination a.active {-->
+                <!--background-color: #4CAF50;-->
+                <!--color: white;-->
+                <!--border: 1px solid #4CAF50;-->
+            <!--}-->
+            <!--.pagination a:hover:not(.active) {background-color: #ddd;}-->
+        <!--</style>-->
+        <!---->
         <div class="container">
 
             <div>
@@ -173,16 +170,16 @@
                     </table>
                 </div>
                 
-                <div class="pagination">
-                  <a href="#">&laquo;</a>
-                  <a href="#">1</a>
-                  <a href="#" class="active">2</a>
-                  <a href="#">3</a>
-                  <a href="#">4</a>
-                  <a href="#">5</a>
-                  <a href="#">6</a>
-                  <a href="#">&raquo;</a>
-                </div>
+                <!--<div class="pagination">-->
+                  <!--<a href="#">&laquo;</a>-->
+                  <!--<a href="#">1</a>-->
+                  <!--<a href="#" class="active">2</a>-->
+                  <!--<a href="#">3</a>-->
+                  <!--<a href="#">4</a>-->
+                  <!--<a href="#">5</a>-->
+                  <!--<a href="#">6</a>-->
+                  <!--<a href="#">&raquo;</a>-->
+                <!--</div>-->
             </div>
 
         </div>
