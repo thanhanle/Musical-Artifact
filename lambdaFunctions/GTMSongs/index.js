@@ -70,7 +70,6 @@ function handleSearch(event, callback) {
                     function reqcallback(error, response, body) {
                       if (!error && response.statusCode == 200) {
                         var info = JSON.parse(body);
-                        console.log(body);
                         var returnJSON = {
                             Count: info.tracks.limit,
                             Songs: [],
@@ -219,14 +218,217 @@ function handleTopCharts(event, callback) {
 }
 
 function handlePost(event, callback) {
-    var response = {
-        statusCode: 200,
-        headers: {
-            "Access-Control-Allow-Origin" : "*",
-            'Content-Type' : 'text/html'
+    var data = querystring.parse(event.body);
+    console.log("THIS IS WHAT I POSTED: " + JSON.stringify(data))
+    var token = data.token
+    var songID = data.songID
+    var emotion = data.emotion
+
+
+    var params = {
+        ExpressionAttributeNames: {
+            "#T": "token"
         },
-        body: "success"
+        ExpressionAttributeValues: {
+            ":t": {
+                S: token
+            }
+        },
+        FilterExpression: "#T = :t",
+        TableName: "MusicUsers"
     };
 
-    callback(null, response);
+    dynamodb.scan(params, function(err, data) {
+        var response = {
+            statusCode: 404,
+            headers: {
+                "Access-Control-Allow-Origin" : "*",
+                'Content-Type' : 'text/html'
+            },
+            body: "failed"
+        };
+
+        if (err) {
+            console.log(err, err.stack); // an error occurred
+            callback(null, response)
+        } else {
+            if(data["Count"] == 1) {
+                console.log("found userid: " + data["Items"][0].userid.S)
+                foundUserID = data["Items"][0].userid.S
+                foundSpotifyInfo = data["Items"][0].spotifyInfo.M
+                firstScanDone()
+            } else {
+                callback(null, response)
+            }
+        }
+     });
+
+    var topchartsparams = {
+        ExpressionAttributeNames: {
+            "#I": "SongID"
+        },
+        ExpressionAttributeValues: {
+            ":i": {
+                S: songID
+            }
+        },
+        FilterExpression: "#I = :i",
+        TableName: "topChart"
+    };
+
+    dynamodb.scan(topchartsparams, function(err, data) {
+         var response = {
+             statusCode: 404,
+             headers: {
+                 "Access-Control-Allow-Origin" : "*",
+                 'Content-Type' : 'text/html'
+             },
+             body: "failed"
+         };
+         if (err) {
+             console.log(err, err.stack); // an error occurred
+             callback(null, response)
+         } else {
+             if(data["Count"] == 1) {
+                 console.log("found song: " + data["Items"][0].Title.S)
+                 topchartsResult = true
+
+             } else {
+                 topchartsResult = false
+             }
+             firstScanDone()
+         }
+
+      });
+
+    var foundUserID = null;
+    var foundSpotifyInfo = null;
+    var topchartsResult = null
+
+
+    function firstScanDone() {
+        if(topchartsResult == null || foundUserID == null) {
+            return
+        }
+
+        if(topchartsResult == false) {
+            checkIfValid(foundUserID, foundSpotifyInfo, function(access_token) {
+                console.log("GETTING TRACK WITH ACCESS TOKEN: " + access_token)
+                var options = {
+                  url: "https://api.spotify.com/v1/tracks/" + songID,
+                  headers: {
+                    'Authorization': 'Bearer ' + access_token
+                  }
+                };
+
+
+                request.get(options, function(error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        var info = JSON.parse(body);
+                        var title = info.name
+                        var artist = info.artists[0].name
+
+                        var params = {
+                            Item: {
+                                "SongID": {
+                                    S: songID                       //create user
+                                },
+                                "Points": {
+                                    N: "" + 1
+                                },
+                                "Artist": {
+                                    S: artist
+                                },
+                                "Title": {
+                                    S: title
+                                },
+                                "StartDay": {
+                                    N: "" + Date.now()
+                                },
+                                "Emotion" : {
+                                    S: "Not implemented"
+                                }
+                            },
+                            TableName: "topChart"
+                        };
+
+                        dynamodb.putItem(params, function(err, data) {
+                            if (err) {
+                                console.log(err, err.stack); // an error occurred
+                                // var response = {
+                                //     statusCode: 404,
+                                //     headers: {
+                                //         "Access-Control-Allow-Origin" : "*",
+                                //         'Content-Type' : 'text/html'
+                                //     },
+                                //     body: "failed"
+                                // };
+                                // callback(null, response)
+                            } else {
+                                // var response = {
+                                //     statusCode: 200,
+                                //     headers: {
+                                //         "Access-Control-Allow-Origin" : "*",
+                                //         'Content-Type' : 'text/html'
+                                //     },
+                                //     body: "success"
+                                // };
+                                // callback(null, response)
+                            }
+                         });
+                    } else {
+                        console.log(error, "Spotify failed to find the track")
+                    }
+                })
+            })
+
+        }
+
+        var postParams = {
+            Item: {
+                "key": {
+                    S: foundUserID + Date.now()
+                },
+                "userID": {
+                    S: foundUserID
+                },
+                "SongID": {
+                    S: songID
+                },
+                "emotion": {
+                    S: emotion
+                },
+                "date": {
+                    N: "" + Date.now()
+                }
+            },
+            TableName: "userPosts"
+        };
+
+        dynamodb.putItem(postParams, function(err, data) {
+            if (err) {
+                var response = {
+                    statusCode: 404,
+                    headers: {
+                        "Access-Control-Allow-Origin" : "*",
+                        'Content-Type' : 'text/html'
+                    },
+                    body: "failed"
+                };
+                callback(null, response)
+            }else {
+                var response = {
+                    statusCode: 200,
+                    headers: {
+                        "Access-Control-Allow-Origin" : "*",
+                        'Content-Type' : 'text/html'
+                    },
+                    body: "success"
+                };
+                callback(null, response)
+            }
+        });
+
+
+    }
 }
