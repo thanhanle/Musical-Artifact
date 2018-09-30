@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+
     <link rel="stylesheet" type="text/css" href="table_css.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script language="JavaScript" src="https://code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
     <script language="JavaScript" src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script language="JavaScript" src="https://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
+
     <script>
         $(document).ready(function(){        
             console.log('make table');
@@ -33,9 +33,9 @@
                             var trackNumber = document.createElement('td')
                             trackNumber.innerHTML = i + 1
                             var title = document.createElement('td')
-                            title.innerHTML = data.Songs[i].title
+                            title.innerHTML = data.Songs[i].artist
                             var artist = document.createElement('td')
-                            artist.innerHTML = data.Songs[i].artist
+                            artist.innerHTML = data.Songs[i].title
                             var votes = document.createElement('td')
                             votes.innerHTML = data.Songs[i].votes
                             var emotions = document.createElement('td')
@@ -72,7 +72,9 @@
             } else {
                 var token = getCookie("token")
                 console.log(token)
-                $("#user").html("<a>" + token + "</a>")
+                var username = token.split("%");
+                console.log(username[0])
+                $("#user").html(username[0]).style.color = "white";
                 $("#user").attr({
                     "href" : null,
                 });
@@ -115,7 +117,12 @@
 
 
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Musical Artifact</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     </head>
 
     <body>
@@ -140,20 +147,29 @@
             <!--.pagination a:hover:not(.active) {background-color: #ddd;}-->
         <!--</style>-->
         <!---->
+        <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Buzzy Beats</a>
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <a id="user" style="color:white"></a>
+
+                    <a class="nav-link" href="logout.html" id="logout" style="color:white">Sign out</a>
+                </li>
+            </ul>
+        </nav>
+
         <div class="container">
 
-            <div class="row">
 
-            </div> 
 
-            <div class="row">
+            <div class="row" style="margin-top: 5%">
                 <div class="col-sm-8"><h2 class="text-center">Top 100 Music</h2></div>
                 <div class="col-sm-4"><button class="btn btn-primary btn-sm" id="search" onclick="location.href = 'search.html'">Post</button></div>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
-                    <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <table id="datatable" class="table table-striped table-bordered .thead-dark" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th>Rank</th>
@@ -186,13 +202,8 @@
 
         </div>
 
-    	<div class="topnav">
-    		<li><a href="login.html" id="user">Login</a>
-    		<li><a href="register_account.html" id="register">Register</a>
-            <li><a href="logout.html" id="logout">Logout</a>
-    	</div>
 
     </body>
 
 </html>
-<li>
+
