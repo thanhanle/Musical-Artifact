@@ -47,7 +47,6 @@
                             //newP.setAttribute('data-toggle', "tooltip")
                             //newP.setAttribute('title', "Edit")
 
-
                             var deletes = document.createElement('td')
                             // deletes.innerHTML = data[i][3]
 
@@ -85,7 +84,6 @@
             }
         });
 
-
         function getCookie(cname) {
             var name = cname + "=";
             var ca = document.cookie.split(';');
@@ -118,43 +116,6 @@
         });
     </script>
 
-    <script>
-        function makeTable(container, data) {
-            var table = $("<table/>").addClass('CSSTableGenerator');
-            $.each(data, function(rowIndex, r) {
-                var row = $("<tr/>");
-                $.each(r, function(colIndex, c) { 
-                    row.append($("<t"+(rowIndex == 0 ?  "h" : "d")+"/>").text(c));
-                });
-                table.append(row);
-            });
-            return container.append(table);
-        }
-    </script>
-    
-    <script>
-        function appendTableColumn(table, rowData) {
-          var lastRow = $('<tr/>').appendTo(table.find('tbody:last'));
-          $.each(rowData, function(colIndex, c) { 
-              lastRow.append($('<td/>').text(c));
-          });
-          return lastRow;
-        }
-    </script>
-
-    <script>
-        function getTableData(table) {
-            var data = [];
-            table.find('tr').each(function (rowIndex, r) {
-                var cols = [];
-                $(this).find('th,td').each(function (colIndex, c) {
-                    cols.push(c.textContent);
-                });
-                data.push(cols);
-            });
-            return data;
-        }
-    </script>
 
     <head>
         <title>Musical Artifact</title>
@@ -183,9 +144,15 @@
         </style>
         
         <div class="container">
+
+            <div>
+                
+            </dir>
+
             <div class="row">
                 <h2 class="text-center">Top 100 Music</h2>
             </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -217,10 +184,8 @@
                   <a href="#">6</a>
                   <a href="#">&raquo;</a>
                 </div>
+            </div>
 
-            </div>
-        </div>
-            </div>
         </div>
 
     	<div class="topnav">
