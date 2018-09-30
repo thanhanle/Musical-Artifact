@@ -71,13 +71,26 @@ function handleSearch(event, callback) {
                       if (!error && response.statusCode == 200) {
                         var info = JSON.parse(body);
                         console.log(body);
+                        var returnJSON = {
+                            Count: info.tracks.limit,
+                            Songs: [],
+                        }
+                        for(var i = 0; i < info.tracks.limit; i++) {
+                            var songJSON = {
+                                id: info.tracks.items[i].id,
+                                artist: info.tracks.items[i].artists[0].name,
+                                title: info.tracks.items[i].name
+                            }
+                            returnJSON.Songs.push(songJSON)
+                        }
+
                         response = {
                             statusCode: 200,
                             headers: {
                                 "Access-Control-Allow-Origin" : "*",
                                 'Content-Type' : 'text/html'
                             },
-                            body: body //songID
+                            body: JSON.stringify(returnJSON) //songID
                         };
                         callback(null, response);
                       }
