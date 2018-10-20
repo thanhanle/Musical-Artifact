@@ -81,7 +81,7 @@
             for (var currLength = 1; currLength < dataByVotes.length; currLength++) {
                 index = currLength - 1;
                 while (index >= 0) {
-                    if (dataByVotes[index].votes > dataByVotes[index + 1].votes) {
+                    if (dataByVotes[index].votes < dataByVotes[index + 1].votes) {
                         swap(index, index + 1)
                     } else {
                         index = 0;
