@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
 
     <script>
+        var data = null
+        var dataByVotes = null
         $(document).ready(function(){        
             console.log('make table');
 
@@ -22,43 +24,31 @@
                         document.getElementById("Login").innerHTML = "Login";
                     } else {
                         console.log(this.responseText)
-                        var data = JSON.parse(this.responseText)
 
-                        var rows = document.getElementById('rows')
-                        rows.innerHTML = ''
+                        // parse data
+                        data = JSON.parse(this.responseText)
 
-                        //data.foreach(row);
+                        //add genres to drop-down list
+                        var genreList = [];
                         for (var i = 0; i < data.Count; i++) {
-                            var newRow = document.createElement('tr')
-
-                            var trackNumber = document.createElement('td')
-                            trackNumber.innerHTML = i + 1
-                            var title = document.createElement('td')
-                            title.innerHTML = data.Songs[i].artist
-                            var artist = document.createElement('td')
-                            artist.innerHTML = data.Songs[i].title
-                            var votes = document.createElement('td')
-                            votes.innerHTML = data.Songs[i].votes
-                            var emotions = document.createElement('td')
-                            emotions.innerHTML = data.Songs[i].emotion
-                            var genre = document.createElement('td')
-                            genre.innerHTML = data.Songs[i].genre
-                            // var newP = document.createElement('p')
-                            // newP.setAttribute('data-placement', "top") 
-                            //newP.setAttribute('data-toggle', "tooltip")
-                            //newP.setAttribute('title', "Edit")
-
-
-                            newRow.appendChild(trackNumber)
-                            newRow.appendChild(title)
-                            newRow.appendChild(artist)
-                            newRow.appendChild(votes)
-                            newRow.appendChild(emotions)
-                            newRow.appendChild(genre)
-
-
-                            rows.append(newRow);
+                            genreList.push(data.Songs[i].genre)
                         }
+                        genreList = unique(genreList)
+                        var select = document.getElementById('drop-down')
+                        for (var i = 0; i < genreList.length; i++) {
+                            var genre = document.createElement('option')
+                            genre.value = genreList[i]
+                            genre.text = genreList[i]
+                            select.append(genre);
+                        }
+
+                        dataByVotes = []
+                        for (var i = 0; i < data.Count; i++) {
+                            dataByVotes[i] = data.Songs[i]
+                        }
+                        sortDataByVotes()
+
+                        sortByVotes(data);
 
 
                     }
@@ -84,6 +74,109 @@
 
             }
         });
+
+        // insertion sort
+        function sortDataByVotes() {
+            var index;
+            for (var currLength = 1; currLength < dataByVotes.length; currLength++) {
+                index = currLength - 1;
+                while (index >= 0) {
+                    if (dataByVotes[index].votes > dataByVotes[index + 1].votes) {
+                        swap(index, index + 1)
+                    } else {
+                        index = 0;
+                    }
+                    index--;
+                }
+            }
+        }
+
+        function swap(a, b) {
+            temp = dataByVotes[b]
+            dataByVotes[b] = dataByVotes[a]
+            dataByVotes[a] = temp
+        }
+
+        function unique(arr) {
+            var u = {}, a = [];
+            for(var i = 0, l = arr.length; i < l; ++i){
+                if(!u.hasOwnProperty(arr[i])) {
+                    a.push(arr[i]);
+                    u[arr[i]] = 1;
+                }
+            }
+            return a;
+        }
+
+        function sortByVotes(data){
+            var rows = document.getElementById('rows')
+            rows.innerHTML = ''
+
+            for (var i = 0; i < data.Count; i++) {
+                var newRow = document.createElement('tr')
+
+                var trackNumber = document.createElement('td')
+                trackNumber.innerHTML = i + 1
+                var title = document.createElement('td')
+                title.innerHTML = dataByVotes[i].artist
+                var artist = document.createElement('td')
+                artist.innerHTML = dataByVotes[i].title
+                var votes = document.createElement('td')
+                votes.innerHTML = dataByVotes[i].votes
+                var emotions = document.createElement('td')
+                emotions.innerHTML = dataByVotes[i].emotion
+                var genre = document.createElement('td')
+                genre.innerHTML = dataByVotes[i].genre
+
+                newRow.appendChild(trackNumber)
+                newRow.appendChild(title)
+                newRow.appendChild(artist)
+                newRow.appendChild(votes)
+                newRow.appendChild(emotions)
+                newRow.appendChild(genre)
+
+                rows.append(newRow);
+            }
+        }
+
+        function sortByGenre(data, genres){
+            var rows = document.getElementById('rows')
+            rows.innerHTML = ''
+
+            var rank = 1
+            for (var i = 0; i < data.Count; i++) {
+                if (data.Songs[i].genre == genres) {
+                    var newRow = document.createElement('tr')
+
+                    var trackNumber = document.createElement('td')
+                    trackNumber.innerHTML = rank++
+                    var title = document.createElement('td')
+                    title.innerHTML = dataByVotes[i].artist
+                    var artist = document.createElement('td')
+                    artist.innerHTML = dataByVotes[i].title
+                    var votes = document.createElement('td')
+                    votes.innerHTML = dataByVotes[i].votes
+                    var emotions = document.createElement('td')
+                    emotions.innerHTML = dataByVotes[i].emotion
+                    var genre = document.createElement('td')
+                    genre.innerHTML = dataByVotes[i].genre
+
+                    newRow.appendChild(trackNumber)
+                    newRow.appendChild(title)
+                    newRow.appendChild(artist)
+                    newRow.appendChild(votes)
+                    newRow.appendChild(emotions)
+                    newRow.appendChild(genre)
+                    rows.append(newRow);
+                }
+            }
+        }
+
+        function changeGenre() {
+            var selected = document.getElementById("drop-down").value;
+            console.log("changeGenre " + selected)
+            sortByGenre(data, selected)
+        }
 
         function getCookie(cname) {
             var name = cname + "=";
@@ -183,9 +276,11 @@
                             </tr>
                         </thead>
 
-                        <tbody id="rows">
+                        <tbody id="rows"> 
 
                         </tbody>
+
+                        <select id="drop-down" onchange="changeGenre()" > </select>
 
                     </table>
                 </div>
