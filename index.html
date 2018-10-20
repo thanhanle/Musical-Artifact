@@ -13,8 +13,6 @@
         var data = null
         var dataByVotes = null
         $(document).ready(function(){        
-            console.log('make table');
-
             var topChartsPath = "https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/gtmsongs/topCharts"
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -23,8 +21,6 @@
                         alert("Login failed")
                         document.getElementById("Login").innerHTML = "Login";
                     } else {
-                        console.log(this.responseText)
-
                         // parse data
                         data = JSON.parse(this.responseText)
 
@@ -35,6 +31,10 @@
                         }
                         genreList = unique(genreList)
                         var select = document.getElementById('drop-down')
+                        var genre = document.createElement('option') //
+                        genre.value = "no filter" //
+                        genre.text = "no filter" //
+                        select.append(genre); //
                         for (var i = 0; i < genreList.length; i++) {
                             var genre = document.createElement('option')
                             genre.value = genreList[i]
@@ -71,12 +71,12 @@
                     "href" : null,
                 });
                 $("#register").html(null)
-
             }
         });
 
         // insertion sort
         function sortDataByVotes() {
+            console.log("initial sort table by votes")
             var index;
             for (var currLength = 1; currLength < dataByVotes.length; currLength++) {
                 index = currLength - 1;
@@ -109,6 +109,7 @@
         }
 
         function sortByVotes(data){
+            console.log("sort by votes")
             var rows = document.getElementById('rows')
             rows.innerHTML = ''
 
@@ -140,12 +141,15 @@
         }
 
         function sortByGenre(data, genres){
+            console.log("sort by genre")
             var rows = document.getElementById('rows')
             rows.innerHTML = ''
 
             var rank = 1
             for (var i = 0; i < data.Count; i++) {
-                if (data.Songs[i].genre == genres) {
+                if (dataByVotes[i].genre == genres) {
+                    console.log("genres = " + genres + "data.Songs[i].genre = " + data.Songs[i].genre)
+
                     var newRow = document.createElement('tr')
 
                     var trackNumber = document.createElement('td')
@@ -160,6 +164,7 @@
                     emotions.innerHTML = dataByVotes[i].emotion
                     var genre = document.createElement('td')
                     genre.innerHTML = dataByVotes[i].genre
+                    console.log("sortByGenre " + dataByVotes[i].genre)
 
                     newRow.appendChild(trackNumber)
                     newRow.appendChild(title)
@@ -175,7 +180,11 @@
         function changeGenre() {
             var selected = document.getElementById("drop-down").value;
             console.log("changeGenre " + selected)
-            sortByGenre(data, selected)
+            if (selected == "no filter") {
+                sortByVotes(data)
+            } else {
+                sortByGenre(data, selected)
+            }
         }
 
         function getCookie(cname) {
@@ -277,7 +286,6 @@
                         </thead>
 
                         <tbody id="rows"> 
-
                         </tbody>
 
                         <select id="drop-down" onchange="changeGenre()" > </select>
