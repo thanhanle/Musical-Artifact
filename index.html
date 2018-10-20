@@ -30,6 +30,7 @@
                         //data.foreach(row);
                         for (var i = 0; i < data.Count; i++) {
                             var newRow = document.createElement('tr')
+
                             var trackNumber = document.createElement('td')
                             trackNumber.innerHTML = i + 1
                             var title = document.createElement('td')
@@ -40,7 +41,8 @@
                             votes.innerHTML = data.Songs[i].votes
                             var emotions = document.createElement('td')
                             emotions.innerHTML = data.Songs[i].emotion
-                            var share = document.createElement('td')
+                            var genre = document.createElement('td')
+                            genre.innerHTML = data.Songs[i].genre
                             // var newP = document.createElement('p')
                             // newP.setAttribute('data-placement', "top") 
                             //newP.setAttribute('data-toggle', "tooltip")
@@ -52,7 +54,7 @@
                             newRow.appendChild(artist)
                             newRow.appendChild(votes)
                             newRow.appendChild(emotions)
-                            newRow.appendChild(share)
+                            newRow.appendChild(genre)
 
 
                             rows.append(newRow);
@@ -177,7 +179,7 @@
                                 <th>Artists</th>
                                 <th>Votes</th>
                                 <th>Emotions</th>
-                                <th></th>
+                                <th>Genre</th>
                             </tr>
                         </thead>
 
