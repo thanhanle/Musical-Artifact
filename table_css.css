@@ -15,6 +15,53 @@ iframe
     height:700px !important;
 }
 
+#myModal {
+    width:100% !important;
+}
+#music-modal {
+    position:absolute;
+    bottom:0;
+    margin:0;
+    width:100% !important;
+}
+.modal-body {
+    padding: 0 !important;
+}
+.modal-content  {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
+    width: 100% !important;
+    min-width: 100%;
+}
+
+.modal .modal-dialog {
+    width:100% !important;
+    position:fixed;
+    bottom:0;
+    margin:0;
+
+}
+
+
+.progress-bar {
+    height: 10px;
+    width: 100%;
+}
+#play {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    padding-top:0;
+    width: 100%;
+}
+#prog {
+    padding-left: 0px !important;
+}
+.progress {
+    height: 10px !important;
+    width: 100% !important;
+}
+
 .btn {
     display: inline-block;
     padding: 6px 12px !important;
