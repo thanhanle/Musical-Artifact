@@ -91,7 +91,7 @@
 
             $("#spotify").click(function(){
 
-                var scope = 'user-read-private user-read-email user-read-recently-played user-read-currently-playing';
+                var scope = 'user-read-private user-read-email user-read-birthdate user-read-recently-played user-read-currently-playing streaming';
                 var client_id = 'afce36398bc1443f8f5c5577547bcaf2'
                 window.location.href = "https://accounts.spotify.com/authorize?response_type=code&client_id="+ client_id +"&scope="+ scope +"&redirect_uri="+ window.location.href + "&state=spotifyLogin"
             });

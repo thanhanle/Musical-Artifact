@@ -8,11 +8,12 @@
     <script language="JavaScript" src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script language="JavaScript" src="https://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
-
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script src="./scripts/playerscript.js"></script>
     <script>
         var data = null
         var dataByVotes = null
-        $(document).ready(function(){        
+        $(document).ready(function(){
             var topChartsPath = "https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/gtmsongs/topCharts"
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -27,6 +28,7 @@
                         //add genres to drop-down list
                         var genreList = [];
                         for (var i = 0; i < data.Count; i++) {
+
                             genreList.push(data.Songs[i].genre)
                         }
                         genreList = unique(genreList)
@@ -118,6 +120,9 @@
 
                 var trackNumber = document.createElement('td')
                 trackNumber.innerHTML = i + 1
+
+                let dataid = dataByVotes[i].id
+                trackNumber.onclick = function() { play(dataid) }
                 var title = document.createElement('td')
                 title.innerHTML = dataByVotes[i].artist
                 var artist = document.createElement('td')
@@ -285,14 +290,13 @@
                             </tr>
                         </thead>
 
-                        <tbody id="rows"> 
+                        <tbody id="rows">
                         </tbody>
 
                         <select id="drop-down" onchange="changeGenre()" > </select>
 
                     </table>
                 </div>
-                
                 <!--<div class="pagination">-->
                   <!--<a href="#">&laquo;</a>-->
                   <!--<a href="#">1</a>-->
@@ -307,8 +311,11 @@
 
         </div>
 
-
+        <button onclick="play()">play</button>
+        <button onclick="pause()">pause</button>
+        <button onclick="next()">skip</button>
+        <button onclick="previous()">previous</button>
+        <button onclick="status()">state</button>
     </body>
 
 </html>
-
