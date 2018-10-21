@@ -104,7 +104,7 @@ function handleSearch(event, callback) {
                         "Access-Control-Allow-Origin" : "*",
                         'Content-Type' : 'text/html'
                     },
-                    body: "failed"
+                    body: "could not find user for access token"
                 };
                 callback(null, response);
             }
@@ -201,6 +201,7 @@ function handleTopCharts(event, callback) {
                 title: data.Items[i].Artist.S,
                 votes: data.Items[i].Points.N,
                 emotion: data.Items[i].Emotion.S,
+                genre: data.Items[i].Genre.S,
             }
             returnJSON.Songs.push(songJSON)
         }
@@ -276,6 +277,8 @@ function handlePost(event, callback) {
         TableName: "topChart"
     };
 
+    var pointCounter = null
+
     dynamodb.scan(topchartsparams, function(err, data) {
          var response = {
              statusCode: 404,
@@ -291,10 +294,14 @@ function handlePost(event, callback) {
          } else {
              if(data["Count"] == 1) {
                  console.log("found song: " + data["Items"][0].Title.S)
-                 topchartsResult = true
+                 var temp = data["Items"][0].Points.N
+                 var intCounter = parseInt(temp)
+                 var pCounter = intCounter + 1
+                 pointCounter = pCounter.toString()
+                 console.log(pointCounter)
 
              } else {
-                 topchartsResult = false
+                 pointCounter = "1"
              }
              firstScanDone()
          }
@@ -307,87 +314,121 @@ function handlePost(event, callback) {
 
 
     function firstScanDone() {
-        if(topchartsResult == null || foundUserID == null) {
+        if(pointCounter == null || foundUserID == null) {
             return
         }
 
-        if(topchartsResult == false) {
-            checkIfValid(foundUserID, foundSpotifyInfo, function(access_token) {
-                console.log("GETTING TRACK WITH ACCESS TOKEN: " + access_token)
-                var options = {
-                  url: "https://api.spotify.com/v1/tracks/" + songID,
-                  headers: {
-                    'Authorization': 'Bearer ' + access_token
-                  }
-                };
+
+        checkIfValid(foundUserID, foundSpotifyInfo, function(access_token) {
+            console.log("GETTING TRACK WITH ACCESS TOKEN: " + access_token)
+            var options = {
+              url: "https://api.spotify.com/v1/tracks/" + songID,
+              headers: {
+                'Authorization': 'Bearer ' + access_token
+              }
+            };
+
+            var title
+            var artist
+            var genre
 
 
-                request.get(options, function(error, response, body) {
-                    if (!error && response.statusCode == 200) {
-                        var info = JSON.parse(body);
-                        var title = info.name
-                        var artist = info.artists[0].name
+            request.get(options, function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var info = JSON.parse(body);
+                    title = info.name
+                    artist = info.artists[0].name
+                    var artistID = info.artists[0].id
 
-                        var params = {
-                            Item: {
-                                "SongID": {
-                                    S: songID                       //create user
-                                },
-                                "Points": {
-                                    N: "" + 1
-                                },
-                                "Artist": {
-                                    S: artist
-                                },
-                                "Title": {
-                                    S: title
-                                },
-                                "StartDay": {
-                                    N: "" + Date.now()
-                                },
-                                "Emotion" : {
-                                    S: "Not implemented"
-                                }
-                            },
-                            TableName: "topChart"
-                        };
+                    var options = {
+                      url: "https://api.spotify.com/v1/artists/" + artistID,
+                      headers: {
+                        'Authorization': 'Bearer ' + access_token
+                      }
+                    };
 
-                        dynamodb.putItem(params, function(err, data) {
-                            if (err) {
-                                console.log(err, err.stack); // an error occurred
-                                // var response = {
-                                //     statusCode: 404,
-                                //     headers: {
-                                //         "Access-Control-Allow-Origin" : "*",
-                                //         'Content-Type' : 'text/html'
-                                //     },
-                                //     body: "failed"
-                                // };
-                                // callback(null, response)
-                            } else {
-                                // var response = {
-                                //     statusCode: 200,
-                                //     headers: {
-                                //         "Access-Control-Allow-Origin" : "*",
-                                //         'Content-Type' : 'text/html'
-                                //     },
-                                //     body: "success"
-                                // };
-                                // callback(null, response)
-                            }
-                         });
-                    } else {
-                        console.log(error, "Spotify failed to find the track")
-                    }
-                })
+                    request.get(options, function(error, response, body) {
+                        if (!error && response.statusCode == 200) {
+                            var artistinfo = JSON.parse(body);
+                            genre = artistinfo.genres[0]
+                            done()
+                        } else {
+                            console.log(error, "Spotify failed to find the artist")
+                        }
+                    })
+
+                } else {
+                    console.log(error, "Spotify failed to find the track")
+                }
             })
 
-        }
 
-        var postParams = {
+            function done() {
+                if(title == null || genre == null) {
+                    return
+                }
+
+                var params = {
+                    Item: {
+                        "SongID": {
+                            S: songID                       //create user
+                        },
+                        "Points": {
+                            N: "" + pointCounter
+                        },
+                        "Artist": {
+                            S: artist
+                        },
+                        "Title": {
+                            S: title
+                        },
+                        "Genre": {
+                            S: genre
+                        },
+                        "StartDay": {
+                            N: "" + Date.now()
+                        },
+                        "Emotion" : {
+                            S: "Not implemented"
+                        }
+                    },
+                    TableName: "topChart"
+                };
+
+                console.log(params)
+                dynamodb.putItem(params, function(err, data) {
+                    if (err) {
+                        console.log(err)
+                        var response = {
+                            statusCode: 404,
+                            headers: {
+                                "Access-Control-Allow-Origin" : "*",
+                                'Content-Type' : 'text/html'
+                            },
+                            body: "failed"
+                        };
+                        callback(null, response)
+                    }else {
+                        var response = {
+                            statusCode: 200,
+                            headers: {
+                                "Access-Control-Allow-Origin" : "*",
+                                'Content-Type' : 'text/html'
+                            },
+                            body: "success"
+                        };
+                        callback(null, response)
+                    }
+                });
+            }
+
+        });
+
+
+         var postParams = {
             Item: {
                 "key": {
-                    S: foundUserID + Date.now()
+                    S: "" + foundUserID + Date.now()
                 },
                 "userID": {
                     S: foundUserID
@@ -405,8 +446,10 @@ function handlePost(event, callback) {
             TableName: "userPosts"
         };
 
+        console.log(postParams)
         dynamodb.putItem(postParams, function(err, data) {
             if (err) {
+                console.log(err)
                 var response = {
                     statusCode: 404,
                     headers: {
@@ -428,7 +471,5 @@ function handlePost(event, callback) {
                 callback(null, response)
             }
         });
-
-
     }
 }
