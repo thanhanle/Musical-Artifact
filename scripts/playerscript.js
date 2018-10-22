@@ -21,6 +21,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         // Playback status updates
         player.addListener('player_state_changed', state => {
             paused = state.paused
+            updateModal(state)
             console.log(state);
         });
 

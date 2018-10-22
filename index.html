@@ -126,9 +126,13 @@
                 trackNumber.innerHTML = i + 1
 
                 let dataid = dataByVotes[i].id
-                trackNumber.onclick = function() { play(dataid) }
+                trackNumber.onclick = function() {
+                    play(dataid)
+                    $("#myModal").modal();
+                }
                 var title = document.createElement('td')
                 title.innerHTML = dataByVotes[i].artist
+                title.onclick = function() { play(dataid)}
                 var artist = document.createElement('td')
                 artist.innerHTML = dataByVotes[i].title
                 var votes = document.createElement('td')
@@ -136,7 +140,11 @@
                 var emotions = document.createElement('td')
                 emotions.innerHTML = dataByVotes[i].emotion
                 var genre = document.createElement('td')
-                genre.innerHTML = dataByVotes[i].genre
+                genre.innerHTML = "<i class=\"fas fa-arrow-circle-up\"></i>"
+
+                genre.onclick = function() {
+                    upvote(dataid)
+                }
 
                 newRow.appendChild(trackNumber)
                 newRow.appendChild(title)
@@ -147,6 +155,29 @@
 
                 rows.append(newRow);
             }
+        }
+
+        function upvote(songID) {
+            var postPath = 'https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/gtmsongs/post'
+            var token = getCookie("token");
+            console.log(songID);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange =  function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if(this.responseText == 'failed') {
+                        alert("Failed")
+
+                    } else {
+                        window.location.href = './index.html';
+                    }
+                } else if(this.readyState == 4 && this.status == 404) {
+                    alert("Failed")
+                    document.getElementById("Login").innerHTML = "Login";
+                }
+            }
+            xhttp.open("POST", postPath, true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("token=" + token + "&songID=" + songID + "&emotion=null");
         }
 
         function sortByGenre(data, genres){
@@ -194,6 +225,21 @@
             } else {
                 sortByGenre(data, selected)
             }
+        }
+        var playtimer
+        var time
+        function updateModal(state) {
+            clearInterval(playtimer)
+            if (!state.paused) {
+                time = state.position
+                playtimer = setInterval(function() {
+                    time = time + 1000
+                    document.getElementById("songtime").style.width = (time / state.duration) * 100 + '%'
+                    console.log(time)
+                }, 1000)
+            }
+
+
         }
 
         function getCookie(cname) {
@@ -312,9 +358,9 @@
                   <!--<a href="#">&raquo;</a>-->
                 <!--</div>-->
             </div>
-            <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#myModal" data-backdrop="false">Bottom</button>
-            <div class="modal" id="myModal" role="dialog" >
-                <div class="modal-dialog" id="music-modal" style="width:100%">
+
+            <div class="modal fade bottom" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-frame modal-bottom" role="document" id="music-modal" style="width:100%">
 
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -326,16 +372,16 @@
                             <div class="row no-gutters">
                                 <div class="col-sm" id="play">
                                     <div class="btn-group" id="play">
-                                        <a href="" class="btn btn-warning" id="play" onclick="previous()"><i class="fas fa-backward fa-align-center fa-lg" id="controls"></i></a>
-                                        <a href="" class="btn btn-warning" id="play" onclick="pause()"><i class="fas fa-pause-circle fa-align-center fa-lg"></i></a>
-                                        <a href="" class="btn btn-warning" id="play" onclick="play()"><i class="fas fa-play-circle fa-align-center fa-lg"></i></a>
-                                        <a href="" class="btn btn-warning" id="play" onclick="skip()"><i class="fas fa-forward fa-align-center fa-lg"></i></a>
+                                        <button href="" class="btn btn-warning" id="play" onclick="previous()"><i class="fas fa-backward fa-align-center fa-lg" id="controls"></i></button>
+                                        <button href="" class="btn btn-warning" id="play" onclick="pause()"><i class="fas fa-pause-circle fa-align-center fa-lg"></i></button>
+                                        <button href="" class="btn btn-warning" id="play" onclick="play()"><i class="fas fa-play-circle fa-align-center fa-lg"></i></button>
+                                        <button href="" class="btn btn-warning" id="play" onclick="next()"><i class="fas fa-forward fa-align-center fa-lg"></i></button>
                                     </div>
 
                                 </div>
                                 <div class="col-md-8" id="prog">
                                     <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-warning" id="songtime" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -349,11 +395,6 @@
 
         </div>
 
-        <button onclick="play()">play</button>
-        <button onclick="pause()">pause</button>
-        <button onclick="next()">skip</button>
-        <button onclick="previous()">previous</button>
-        <button onclick="status()">state</button>
     </body>
 
 </html>
