@@ -65,7 +65,6 @@ function play(id) {
         spotifyPlayer.resume().then(() => {
           console.log('Resumed!');
         });
-        //sendCommand(playpath)
     } else {
         sendCommand(playpath, uri)
     }
@@ -73,24 +72,18 @@ function play(id) {
 }
 
 function pause() {
-    //var pausepath = "https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/GTMPlay/pause"
-    //sendCommand(pausepath)
     spotifyPlayer.pause().then(() => {
         console.log('Paused!');
     });
 }
 
 function next() {
-    //var skippath = "https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/GTMPlay/next"
-    //sendCommand(skippath)
     spotifyPlayer.nextTrack().then(() => {
         console.log('Skipped to next track!');
     });
 }
 
 function previous() {
-    //var previouspath = "https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/GTMPlay/previous"
-    //sendCommand(previouspath)
     spotifyPlayer.previousTrack().then(() => {
         console.log('Set to previous track!');
     });
