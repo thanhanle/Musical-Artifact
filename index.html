@@ -17,7 +17,7 @@
     <script>
         var data = null
         var dataByVotes = null
-        $(document).ready(function(){
+        var loadChart = function(){
             var topChartsPath = "https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/gtmsongs/topCharts"
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -50,11 +50,12 @@
 
                         dataByVotes = []
                         for (var i = 0; i < data.Count; i++) {
-                            dataByVotes[i] = data.Songs[i]
+                            dataByVotes.push(data.Songs[i])
                         }
+
                         sortDataByVotes()
 
-                        sortByVotes(data);
+                        displayInChart();
 
 
                     }
@@ -78,30 +79,16 @@
                 });
                 $("#register").html(null)
             }
-        });
+        }
+        $(document).ready(loadChart);
 
         // insertion sort
         function sortDataByVotes() {
-            console.log("initial sort table by votes")
-            var index;
-            for (var currLength = 1; currLength < dataByVotes.length; currLength++) {
-                index = currLength - 1;
-                while (index >= 0) {
-                    if (dataByVotes[index].votes < dataByVotes[index + 1].votes) {
-                        swap(index, index + 1)
-                    } else {
-                        index = 0;
-                    }
-                    index--;
-                }
-            }
+            dataByVotes.sort(function compare(a, b) {
+                return b.votes - a.votes
+            })
         }
 
-        function swap(a, b) {
-            temp = dataByVotes[b]
-            dataByVotes[b] = dataByVotes[a]
-            dataByVotes[a] = temp
-        }
 
         function unique(arr) {
             var u = {}, a = [];
@@ -114,7 +101,7 @@
             return a;
         }
 
-        function sortByVotes(data){
+        function displayInChart(){
             console.log("sort by votes")
             var rows = document.getElementById('rows')
             rows.innerHTML = ''
@@ -168,7 +155,7 @@
                         alert("Failed")
 
                     } else {
-                        window.location.href = './index.html';
+                        loadChart()
                     }
                 } else if(this.readyState == 4 && this.status == 404) {
                     alert("Failed")
@@ -221,7 +208,7 @@
             var selected = document.getElementById("drop-down").value;
             console.log("changeGenre " + selected)
             if (selected == "no filter") {
-                sortByVotes(data)
+                displayInChart()
             } else {
                 sortByGenre(data, selected)
             }
