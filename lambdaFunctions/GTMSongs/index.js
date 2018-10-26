@@ -200,7 +200,7 @@ function handleTopCharts(event, callback) {
                 artist: data.Items[i].Title.S,
                 title: data.Items[i].Artist.S,
                 votes: data.Items[i].Points.N,
-                emotion: data.Items[i].Emotion.S,
+                emotions: data.Items[i].Emotions.M,
                 genre: data.Items[i].Genre.S,
             }
             returnJSON.Songs.push(songJSON)
@@ -278,6 +278,7 @@ function handlePost(event, callback) {
     };
 
     var pointCounter = null
+    var emotionsdata = {}
 
     dynamodb.scan(topchartsparams, function(err, data) {
          var response = {
@@ -299,9 +300,16 @@ function handlePost(event, callback) {
                  var pCounter = intCounter + 1
                  pointCounter = pCounter.toString()
                  console.log(pointCounter)
-
+                 var currentemotions = data["Items"][0].Emotions.M
+                 emotionsdata = currentemotions
+                 if(currentemotions[emotion] == null) {
+                     emotionsdata[emotion] = { "N" : "1"}
+                 } else {
+                     emotionsdata[emotion] = { "N" : "" + (parseInt(currentemotions[emotion].N) + 1)}
+                 }
              } else {
                  pointCounter = "1"
+                 emotionsdata[emotion] = { "N" : "1"}
              }
              firstScanDone()
          }
@@ -388,8 +396,8 @@ function handlePost(event, callback) {
                         "StartDay": {
                             N: "" + Date.now()
                         },
-                        "Emotion" : {
-                            S: "Not implemented"
+                        "Emotions" : {
+                            M: emotionsdata
                         }
                     },
                     TableName: "topChart"
