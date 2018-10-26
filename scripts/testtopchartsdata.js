@@ -1,4 +1,4 @@
-{
+var testdata = {
     "Count" : 10,
     "Songs" : [
         {
