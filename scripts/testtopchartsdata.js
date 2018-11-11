@@ -7,9 +7,9 @@ var testdata = {
             "artist" : "Kanye West",
             "votes" : 20,
             "emotions" : {
-                "happy" : 20,
-                "sad" : 4,
-                "angry" : 1
+                "happy" : {"N" : "10"},
+                "sad" : {"N" : "5"},
+                "angry" : {"N" : "16"}
             }
         },
         {
@@ -18,9 +18,9 @@ var testdata = {
             "artist" : "Kanye West",
             "votes" : 20,
             "emotions" : {
-                "happy" : 20,
-                "sad" : 4,
-                "angry" : 1
+                "happy" : {"N" : "10"},
+                "sad" : {"N" : "5"},
+                "angry" : {"N" : "16"}
             }
         },
         {
@@ -29,9 +29,9 @@ var testdata = {
             "artist" : "Kanye West",
             "votes" : 20,
             "emotions" : {
-                "happy" : 20,
-                "sad" : 4,
-                "angry" : 1
+                "happy" : {"N" : "10"},
+                "sad" : {"N" : "5"},
+                "angry" : {"N" : "16"}
             }
         },
         {
@@ -40,9 +40,9 @@ var testdata = {
             "artist" : "Kanye West",
             "votes" : 20,
             "emotions" : {
-                "happy" : 20,
-                "sad" : 4,
-                "angry" : 1
+                "happy" : {"N" : "10"},
+                "sad" : {"N" : "5"},
+                "angry" : {"N" : "16"}
             }
         },
         {
@@ -51,9 +51,9 @@ var testdata = {
             "artist" : "Kanye West",
             "votes" : 20,
             "emotions" : {
-                "happy" : 20,
-                "sad" : 4,
-                "angry" : 1
+                "happy" : {"N" : "10"},
+                "sad" : {"N" : "5"},
+                "angry" : {"N" : "16"}
             }
         },
         {
@@ -62,9 +62,9 @@ var testdata = {
             "artist" : "Kanye West",
             "votes" : 20,
             "emotions" : {
-                "happy" : 20,
-                "sad" : 4,
-                "angry" : 1
+                "happy" : {"N" : "10"},
+                "sad" : {"N" : "5"},
+                "angry" : {"N" : "16"}
             }
         },
         {
@@ -73,9 +73,9 @@ var testdata = {
             "artist" : "Kanye West",
             "votes" : 20,
             "emotions" : {
-                "happy" : 20,
-                "sad" : 4,
-                "angry" : 1
+                "happy" : {"N" : "10"},
+                "sad" : {"N" : "5"},
+                "angry" : {"N" : "16"}
             }
         },
         {
@@ -84,9 +84,9 @@ var testdata = {
             "artist" : "Kanye West",
             "votes" : 20,
             "emotions" : {
-                "happy" : 20,
-                "sad" : 4,
-                "angry" : 1
+                "happy" : {"N" : "10"},
+                "sad" : {"N" : "5"},
+                "angry" : {"N" : "16"}
             }
         },
         {
@@ -95,9 +95,9 @@ var testdata = {
             "artist" : "Kanye West",
             "votes" : 20,
             "emotions" : {
-                "happy" : 20,
-                "sad" : 4,
-                "angry" : 1
+                "happy" : {"N" : "10"},
+                "sad" : {"N" : "5"},
+                "angry" : {"N" : "16"}
             }
         },
         {
@@ -106,9 +106,9 @@ var testdata = {
             "artist" : "Kanye West",
             "votes" : 20,
             "emotions" : {
-                "happy" : 20,
-                "sad" : 4,
-                "angry" : 1
+                "happy" : {"N" : "10"},
+                "sad" : {"N" : "5"},
+                "angry" : {"N" : "16"}
             }
         }
     ]
