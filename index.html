@@ -125,22 +125,29 @@
                 var votes = document.createElement('td')
                 votes.innerHTML = dataByVotes[i].votes
                 var emotions = document.createElement('td')
-                console.log(dataByVotes[i].emotions.sad.N)
+                // console.log(dataByVotes[i].emotions.sad.N)
                 // var emotionArr = [][][]
-                // for (var i = 0; i < dataByVotes[i].emotions.length; i++) {
-                //     if (face == "happy") {
-                //         // emotionArr[face][0] = dataByVotes[i].emotions.happy.N
-                //         // emotionArr[face][0][0] = 🙂
-                //         emotions.innerHTML += 🙂
-                //     } else if (face == "angry") {
-                //         // emotionArr[face][0] = dataByVotes[i].emotions.angry.N
-                //         // emotionArr[face][0][0] = 😠
-                //         emotions.innerHTML += 😠
-                //     } else if (face == "sad") {
-                //         // emotionArr[face][0] = dataByVotes[i].emotions.sad.N
-                //         // emotionArr[face][0][0] = 😥
-                //         emotions.innerHTML += 😥
-                //     }
+                console.log("Object.keys(dataByVotes[i].emotions).length")
+                var numOfEmotions = Object.keys(dataByVotes[i].emotions).length
+                console.log(title.innerHTML)
+                console.log("numEmotions: " + numOfEmotions)
+                // for (var i = 0; i < 4; i++) { 
+                // //     console.log(i)
+                //     // if (dataByVotes[i].emotions.happy !== null) {
+                // //         // emotionArr[face][0] = dataByVotes[i].emotions.happy.N
+                // //         // emotionArr[face][0][0] = 🙂
+                // //         emotions.innerHTML += "happy" 
+                //     // } 
+                // //else if (dataByVotes[i].emotions.angry != null) {
+                // //         // emotionArr[face][0] = dataByVotes[i].emotions.angry.N
+                // //         // emotionArr[face][0][0] = 😠
+                // //         emotions.innerHTML += "angry" 
+                // //     } else if (dataByVotes[i].emotions.sad != null) {
+                // //         // emotionArr[face][0] = dataByVotes[i].emotions.sad.N
+                // //         // emotionArr[face][0][0] = 😥
+                // //         emotions.innerHTML += "sad" 
+                // //     }
+                //     console.log("i = " + i)
                 // }
                 emotions.innerHTML = dataByVotes[i].emotion
                 var genre = document.createElement('td')
