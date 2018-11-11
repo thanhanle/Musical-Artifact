@@ -70,17 +70,45 @@
                 window.location = "./login.html"
             } else {
                 var token = getCookie("token")
-                console.log(token)
-                var username = token.split("%");
-                console.log(username[0])
-                $("#user").html(username[0]);
-                $("#user").attr({
-                    "href" : null,
-                });
-                $("#register").html(null)
+
             }
         }
-        $(document).ready(loadChart);
+        var getUserInfo = function () {
+            var token = getCookie("token")
+            console.log(token)
+            var gtmLogin = "https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/GTMLogin/getuserinfo"
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if(this.responseText == 'failed') {
+                        alert("Could not find user")
+                        document.getElementById("Login").innerHTML = "Login";
+                    } else {
+                        data = JSON.parse(this.responseText);
+
+                        var username = data.display_name;
+                        $("#user").html(username);
+                        $("#user").attr({
+                            "href" : null,
+                        });
+                    }
+
+
+                } else if(this.readyState == 4 && this.status == 404) {
+                    alert("failed")
+                }
+            };
+            xhttp.open("POST", gtmLogin, true);
+            xhttp.send("token=" + token)
+
+
+        }
+
+
+        $(document).ready(function () {
+            getUserInfo()
+            loadChart()
+        });
 
         // insertion sort
         function sortDataByVotes() {
