@@ -143,12 +143,23 @@
                 //     }
                 // }
                 emotions.innerHTML = dataByVotes[i].emotion
+                var updoot = document.createElement('i')
+                updoot.classList.add('fas', 'fa-arrow-circle-up')
+                updoot.onclick = function() { upvote(dataid)}
+                var addPlay = document.createElement('i')
+                addPlay.classList.add('fas', 'fa-plus-circle')
+                addPlay.onclick = function() { addSong(dataid)}
                 var genre = document.createElement('td')
-                genre.innerHTML = "<i class=\"fas fa-arrow-circle-up\"></i>"
-                genre.innerHTML = genre.innerHTML + "  " +"<i class=\"fas fa-plus-circle\"></i>"
-                genre.onclick = function() {
-                    upvote(dataid)
-                }
+                genre.appendChild(updoot)
+                genre.appendChild(addPlay)
+
+                // genre.innerHTML = genre.innerHTML + "  " +"<i class=\"fas fa-plus-circle\" id='addSong'></i>"
+                // genre.onclick = function() {
+                //     if(document.getElementById("upVote")) {
+                //         upvote(dataid);
+                //     }
+                //
+                // }
 
                 newRow.appendChild(trackNumber)
                 newRow.appendChild(title)
@@ -182,6 +193,30 @@
             xhttp.open("POST", postPath, true);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send("token=" + token + "&songID=" + songID + "&emotion=null");
+        }
+
+
+        function addSong(songID) {
+            var postPath = 'https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/gtmsongs/addToPlaylist'
+            var token = getCookie("token");
+            console.log(songID);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange =  function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if(this.responseText == 'failed') {
+                        alert("Failed")
+
+                    } else {
+                        loadChart()
+                    }
+                } else if(this.readyState == 4 && this.status == 404) {
+                    alert("Failed")
+                    document.getElementById("Login").innerHTML = "Login";
+                }
+            }
+            xhttp.open("POST", postPath, true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("token=" + token + "&songID=" + songID);
         }
 
         function sortByGenre(data, genres){
