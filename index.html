@@ -125,10 +125,23 @@
                 var votes = document.createElement('td')
                 votes.innerHTML = dataByVotes[i].votes
                 var emotions = document.createElement('td')
-                console.log(dataByVotes[i].emotions.happy.N)
-
-
-
+                console.log(dataByVotes[i].emotions.sad.N)
+                // var emotionArr = [][][]
+                // for (var i = 0; i < dataByVotes[i].emotions.length; i++) {
+                //     if (face == "happy") {
+                //         // emotionArr[face][0] = dataByVotes[i].emotions.happy.N
+                //         // emotionArr[face][0][0] = 🙂
+                //         emotions.innerHTML += 🙂
+                //     } else if (face == "angry") {
+                //         // emotionArr[face][0] = dataByVotes[i].emotions.angry.N
+                //         // emotionArr[face][0][0] = 😠
+                //         emotions.innerHTML += 😠
+                //     } else if (face == "sad") {
+                //         // emotionArr[face][0] = dataByVotes[i].emotions.sad.N
+                //         // emotionArr[face][0][0] = 😥
+                //         emotions.innerHTML += 😥
+                //     }
+                // }
                 emotions.innerHTML = dataByVotes[i].emotion
                 var genre = document.createElement('td')
                 genre.innerHTML = "<i class=\"fas fa-arrow-circle-up\"></i>"
