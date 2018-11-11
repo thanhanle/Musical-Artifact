@@ -128,7 +128,7 @@
                 emotions.innerHTML = dataByVotes[i].emotion
                 var genre = document.createElement('td')
                 genre.innerHTML = "<i class=\"fas fa-arrow-circle-up\"></i>"
-
+                genre.innerHTML = genre.innerHTML + "  " +"<i class=\"fas fa-plus-circle\"></i>"
                 genre.onclick = function() {
                     upvote(dataid)
                 }
@@ -323,7 +323,7 @@
                                 <th>Artists</th>
                                 <th>Votes</th>
                                 <th>Emotions</th>
-                                <th>Genre</th>
+                                <th></th>
                             </tr>
                         </thead>
 
