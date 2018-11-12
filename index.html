@@ -156,25 +156,33 @@
 
                 var emotions = document.createElement('td')
 
-                console.log("Object.keys(dataByVotes[i].emotions).length")
-                var numOfEmotions = Object.keys(dataByVotes[i].emotions).length
-                console.log(title.innerHTML)
-                console.log("numEmotions: " + numOfEmotions)
-                for (var x = 0; x < 4; x++) {
-                    if (dataByVotes[i].emotions.happy !== null) {
-                        // emotions.innerHTML += 🙂
-                        emotions.innerHTML = "" + String.fromCodePoint(0x1F601)
-                    }
-                    if (dataByVotes[i].emotions.angry != null) {
-                        // emotions.innerHTML += 😠
-                        emotions.innerHTML = "" + String.fromCodePoint(0x1F621)
-                    }
-                    if (dataByVotes[i].emotions.sad != null) {
-                        // emotions.innerHTML += 😥
-                        emotions.innerHTML += "" + String.fromCodePoint(0x1F622)
-                    }
-                    console.log("x = " + x)
+                // console.log("Object.keys(dataByVotes[i].emotions).length")
+
+                // console.log(title.innerHTML)
+                // console.log("numEmotions: " + numOfEmotions)
+
+                var emotionBuild = '';
+                var emotionCount = 0;
+                if (dataByVotes[i].emotions.happy != null) {
+                    // emotions.innerHTML += 🙂
+                    emotionBuild += String.fromCodePoint(0x1F601)
+                    emotionCount += parseInt(dataByVotes[i].emotions.happy.N)
                 }
+                if (dataByVotes[i].emotions.angry !=  null) {
+                    // emotions.innerHTML += 😠
+                    emotionBuild += " " + String.fromCodePoint(0x1F621)
+                    emotionCount += parseInt(dataByVotes[i].emotions.angry.N)
+
+                }
+                if (dataByVotes[i].emotions.sad != null) {
+                    // emotions.innerHTML += 😥
+                    emotionBuild += " " + String.fromCodePoint(0x1F622)
+                    emotionCount += parseInt(dataByVotes[i].emotions.sad.N)
+
+                }
+                emotions.innerHTML = emotionBuild + " " + emotionCount
+
+
 
                 var updoot = document.createElement('i')
                 updoot.classList.add('fas', 'fa-arrow-circle-up')
@@ -237,9 +245,11 @@
             xhttp.onreadystatechange =  function () {
                 if (this.readyState == 4 && this.status == 200) {
                     if(this.responseText == 'failed') {
-                        alert("Failed")
-
+                        alert("Failed to add playlist.")
+                    } else {
+                        alert("Successfully added to playlist.")
                     }
+
                 } else if(this.readyState == 4 && this.status == 404) {
                     alert("Failed")
                     document.getElementById("Login").innerHTML = "Login";
@@ -280,11 +290,11 @@
                             // emotions.innerHTML += 🙂
                             emotions.innerHTML = "" + String.fromCodePoint(0x1F601)
                         }
-                        if (dataByVotes[i].emotions.angry != null) {
+                        if (dataByVotes[i].emotions.angry !== null) {
                             // emotions.innerHTML += 😠
                             emotions.innerHTML = "" + String.fromCodePoint(0x1F621)
                         }
-                        if (dataByVotes[i].emotions.sad != null) {
+                        if (dataByVotes[i].emotions.sad !== null) {
                             // emotions.innerHTML += 😥
                             emotions.innerHTML += "" + String.fromCodePoint(0x1F622)
                         }
