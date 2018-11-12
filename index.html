@@ -160,22 +160,21 @@
                 var numOfEmotions = Object.keys(dataByVotes[i].emotions).length
                 console.log(title.innerHTML)
                 console.log("numEmotions: " + numOfEmotions)
-                for (var x = 0; x < 4; x++) { 
+                for (var x = 0; x < 4; x++) {
                     if (dataByVotes[i].emotions.happy !== null) {
-                        // emotions.innerHTML += 🙂 
+                        // emotions.innerHTML += 🙂
                         emotions.innerHTML = "" + String.fromCodePoint(0x1F601)
-                    } 
+                    }
                     if (dataByVotes[i].emotions.angry != null) {
-                        // emotions.innerHTML += 😠 
+                        // emotions.innerHTML += 😠
                         emotions.innerHTML = "" + String.fromCodePoint(0x1F621)
-                    } 
+                    }
                     if (dataByVotes[i].emotions.sad != null) {
-                        // emotions.innerHTML += 😥 
+                        // emotions.innerHTML += 😥
                         emotions.innerHTML += "" + String.fromCodePoint(0x1F622)
                     }
                     console.log("x = " + x)
                 }
-
 
                 var updoot = document.createElement('i')
                 updoot.classList.add('fas', 'fa-arrow-circle-up')
@@ -240,8 +239,6 @@
                     if(this.responseText == 'failed') {
                         alert("Failed")
 
-                    } else {
-                        loadChart()
                     }
                 } else if(this.readyState == 4 && this.status == 404) {
                     alert("Failed")
@@ -278,17 +275,17 @@
                     var numOfEmotions = Object.keys(dataByVotes[i].emotions).length
                     console.log(title.innerHTML)
                     console.log("numEmotions: " + numOfEmotions)
-                    for (var x = 0; x < 4; x++) { 
+                    for (var x = 0; x < 4; x++) {
                         if (dataByVotes[i].emotions.happy !== null) {
-                            // emotions.innerHTML += 🙂 
+                            // emotions.innerHTML += 🙂
                             emotions.innerHTML = "" + String.fromCodePoint(0x1F601)
-                        } 
+                        }
                         if (dataByVotes[i].emotions.angry != null) {
-                            // emotions.innerHTML += 😠 
+                            // emotions.innerHTML += 😠
                             emotions.innerHTML = "" + String.fromCodePoint(0x1F621)
-                        } 
+                        }
                         if (dataByVotes[i].emotions.sad != null) {
-                            // emotions.innerHTML += 😥 
+                            // emotions.innerHTML += 😥
                             emotions.innerHTML += "" + String.fromCodePoint(0x1F622)
                         }
                     }
@@ -296,6 +293,7 @@
                     var genre = document.createElement('td')
                     genre.innerHTML = dataByVotes[i].genre
                     console.log("sortByGenre " + dataByVotes[i].genre)
+
 
                     newRow.appendChild(trackNumber)
                     newRow.appendChild(title)
