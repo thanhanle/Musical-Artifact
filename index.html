@@ -147,7 +147,10 @@
                 }
                 var title = document.createElement('td')
                 title.innerHTML = dataByVotes[i].artist
-                title.onclick = function() { play(dataid)}
+                title.onclick = function() {
+                    play(dataid)
+                    $("#myModal").modal();
+                }
                 var artist = document.createElement('td')
                 artist.innerHTML = dataByVotes[i].title
                 var votes = document.createElement('td')
@@ -192,6 +195,7 @@
                 addPlay.onclick = function() { addSong(dataid)}
                 var genre = document.createElement('td')
                 genre.appendChild(updoot)
+
                 genre.appendChild(addPlay)
 
                 // genre.innerHTML = genre.innerHTML + "  " +"<i class=\"fas fa-plus-circle\" id='addSong'></i>"
