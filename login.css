@@ -2,7 +2,7 @@
     margin-top: 25%;
 }
 
-#Login {
+#Login, #register {
     background-color: gold;
     border-color: #e4be00;
     color: black;
