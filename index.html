@@ -191,6 +191,9 @@
                     emotionCount += parseInt(dataByVotes[i].emotions.sad.N)
 
                 }
+                if (dataByVotes[i].emotions.null != null) {
+                    emotionCount += parseInt(dataByVotes[i].emotions.null.N)
+                }
                 emotions.innerHTML = emotionBuild + " " + emotionCount
 
 
@@ -233,14 +236,12 @@
             xhttp.onreadystatechange =  function () {
                 if (this.readyState == 4 && this.status == 200) {
                     if(this.responseText == 'failed') {
-                        alert("Failed")
-
+                        alert("Sorry there was a problem")
                     } else {
                         loadChart()
                     }
                 } else if(this.readyState == 4 && this.status == 404) {
-                    alert("Failed")
-                    document.getElementById("Login").innerHTML = "Login";
+                    alert("Failed " + this.responseText)
                 }
             }
             xhttp.open("POST", postPath, true);
@@ -346,7 +347,6 @@
                 playtimer = setInterval(function() {
                     time = time + 1000
                     document.getElementById("songtime").style.width = (time / state.duration) * 100 + '%'
-                    console.log(time)
                 }, 1000)
             }
 
@@ -470,38 +470,38 @@
                 <!--</div>-->
             </div>
 
-            <div class="modal fade bottom" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-frame modal-bottom" role="document" id="music-modal" style="width:100%">
 
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <!--<div class="modal-header">-->
-                        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                        <!--<h4 class="modal-title">Modal Header</h4>-->
-                        <!--</div>-->
-                        <div class="modal-body">
-                            <div class="row no-gutters">
-                                <div class="col-sm" id="play">
-                                    <div class="btn-group" id="play">
-                                        <button href="" class="btn btn-warning" id="play" onclick="previous()"><i class="fas fa-backward fa-align-center fa-lg" id="controls"></i></button>
-                                        <button href="" class="btn btn-warning" id="play" onclick="pause()"><i class="fas fa-pause-circle fa-align-center fa-lg"></i></button>
-                                        <button href="" class="btn btn-warning" id="play" onclick="play()"><i class="fas fa-play-circle fa-align-center fa-lg"></i></button>
-                                        <button href="" class="btn btn-warning" id="play" onclick="next()"><i class="fas fa-forward fa-align-center fa-lg"></i></button>
-                                    </div>
 
-                                </div>
-                                <div class="col-md-8" id="prog">
-                                    <div class="progress">
-                                        <div class="progress-bar bg-warning" id="songtime" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
+        </div>
+        <div class="modal-dialog modal-frame modal-bottom" role="document" id="music-modal" style="width:100%; position: fixed">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                <!--<h4 class="modal-title">Modal Header</h4>-->
+                <!--</div>-->
+                <div class="modal-body">
+                    <span id="prog"">
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" id="songtime" role="progressbar" style="width: 0%; margin-bottom:10px" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <!--<div class="modal-footer">-->
-                        <!--</div>-->
-                    </div>
+                    </span>
+                    <div>
+                        <div class="col-sm" id="play">
+                            <div class="col-sm btn-group" id="play">
+                                <button class="btn" id="play" onclick="previous()" style="background-color:#fbbb4b!important; border-color:#e4be00!important"><i class="fas fa-backward fa-align-center fa-lg" id="controls"></i></button>
+                                <button class="btn" id="play" onclick="pause()" style="background-color:#fbbb4b!important; border-color:#e4be00!important"><i class="fas fa-pause-circle fa-align-center fa-lg"></i></button>
+                                <button class="btn" id="play" onclick="play()" style="background-color:#fbbb4b!important; border-color:#e4be00!important"><i class="fas fa-play-circle fa-align-center fa-lg"></i></button>
+                                <button class="btn" id="play" onclick="next()" style="background-color:#fbbb4b!important; border-color:#e4be00!important"><i class="fas fa-forward fa-align-center fa-lg"></i></button>
+                            </div>
 
+                        </div>
+
+                    </div>
                 </div>
+                <!--<div class="modal-footer">-->
+                <!--</div>-->
             </div>
 
         </div>
