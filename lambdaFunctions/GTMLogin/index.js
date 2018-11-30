@@ -464,7 +464,7 @@ function hashPassword(password) {
 }
 
 function generateToken(data) {
-    return data + "%" +  Math.random().toString(36).substring(7);
+    return data + "!" +  Math.random().toString(36).substring(7);
 }
 
 // hashPassword('PASSWORD');
