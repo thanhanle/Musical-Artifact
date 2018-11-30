@@ -1,13 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+SC:500');
+html {
+    font-family: 'Noto Sans SC', serif;
+
+}
+
+@-webkit-keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Standard syntax */
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
 #login {
     margin-top: 25%;
 }
 
 #Login, #register {
-     background-color: gold;
+     background-color: #fbbb4b;
      border-color: #e4be00;
      color: black;
+    font-family: 'Noto Sans SC', serif;
 
- }
+
+}
+
+#Login:hover, #register:hover{
+    background-color: #fbcf7f;
+    border-color: #e4c237;
+    color: whitesmoke;
+}
+.logo {
+    width: 200px;
+    height: 100px;
+    margin-left: 40%;
+    -webkit-animation-name: fade; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    animation-name: fade;
+    animation-duration: 1s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+
+}
 
 body, html {
     background-image: url('images/background.png');
@@ -38,19 +85,44 @@ body, html {
 /*}*/
 
 #login-box {
+    -webkit-animation-name: fade; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 500ms; /* Safari 4.0 - 8.0 */
+    animation-name: fade;
+    animation-duration: 500ms;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+    opacity: 0;
     margin-top: 15%;
-    background-color: whitesmoke;
+    background-color: #F7F7F7;
     color: black;
-    opacity: 0.75;
     -webkit-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 1);
     -moz-box-shadow:    0px 8px 20px 0px rgba(0, 0, 0, 1);
     box-shadow:         0px 8px 20px 0px rgba(0, 0, 0, 1);
 }
 #form-reg {
     margin-top: 2%;
+    -webkit-animation-name: fade; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    animation-name: fade;
+    animation-duration: 1s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+
 
 }
 
 #log {
     margin-top: 5%;
+}
+
+.form-check, .form-group,.mb-0 {
+    font-family: 'Noto Sans SC', serif;
+
+}
+#uname1, #pwd1, #cpwd1 {
+    background-color: whitesmoke;
+    border: 0px;
+    border-bottom: 2px solid gray;
+    text:black;
 }
