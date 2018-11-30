@@ -1,6 +1,7 @@
 var deviceID
 var paused = false
 var spotifyPlayer = null
+currentid = null
 
 window.onSpotifyWebPlaybackSDKReady = () => {
     getAccessToken(function(err, accesstoken) {
@@ -62,17 +63,37 @@ function getAccessToken(callback) {
 }
 function play(id) {
     console.log(id)
+    currentid = id
     var playpath = "https://veevveq2j8.execute-api.us-east-1.amazonaws.com/default/GTMPlay/play"
     var songID = id
     var uri = "spotify:track:" + songID
-    if(paused) {
+    if(paused && !id) {
         spotifyPlayer.resume().then(() => {
           console.log('Resumed!');
         });
     } else {
         sendCommand(playpath, uri)
     }
+    document.getElementById("playpause").classList.remove("fa-play-circle");
+    document.getElementById("playpause").classList.add("fa-pause-circle");
 
+}
+
+function toggle() {
+    if(paused) {
+        spotifyPlayer.resume().then(() => {
+          console.log('Resumed!');
+        });
+        document.getElementById("playpause").classList.remove("fa-play-circle");
+        document.getElementById("playpause").classList.add("fa-pause-circle");
+
+    } else {
+        spotifyPlayer.pause().then(() => {
+            console.log('Paused!');
+        });
+        document.getElementById("playpause").classList.remove("fa-pause-circle");
+        document.getElementById("playpause").classList.add("fa-play-circle");
+    }
 }
 
 function pause() {
@@ -82,15 +103,25 @@ function pause() {
 }
 
 function next() {
-    spotifyPlayer.nextTrack().then(() => {
-        console.log('Skipped to next track!');
-    });
+    for (var i=0; i< dataByVotes.length; i++) {
+        if(dataByVotes[i].id == currentid) {
+            if(dataByVotes[i+1] != null) {
+                play(dataByVotes[i+1].id)
+            }
+            i = dataByVotes.length
+        }
+    }
 }
 
 function previous() {
-    spotifyPlayer.previousTrack().then(() => {
-        console.log('Set to previous track!');
-    });
+    for (var i=0; i< dataByVotes.length; i++) {
+        if(dataByVotes[i].id == currentid) {
+            if(dataByVotes[i-1] != null) {
+                play(dataByVotes[i-1].id)
+            }
+            i = dataByVotes.length
+        }
+    }
 }
 
 function status() {

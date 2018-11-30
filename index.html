@@ -144,7 +144,7 @@
                 trackNumber.onclick = function() {
                     if(spotifyPlayer != null) {
                         play(dataid)
-                        $("#myModal").modal();
+                        document.getElementById("music-modal").classList.add("show");
                     } else {
                         alert("You must connect your Spotify premium account to play music")
                     }
@@ -154,7 +154,7 @@
                 title.onclick = function() {
                     if(spotifyPlayer != null) {
                         play(dataid)
-                        $("#myModal").modal();
+                        document.getElementById("music-modal").classList.add("show");
                     } else {
                         alert("You must connect your Spotify premium account to play music")
                     }
@@ -345,9 +345,9 @@
             if (!state.paused) {
                 time = state.position
                 playtimer = setInterval(function() {
-                    time = time + 1000
+                    time = time + 100
                     document.getElementById("songtime").style.width = (time / state.duration) * 100 + '%'
-                }, 1000)
+                }, 100)
             }
 
 
@@ -473,37 +473,25 @@
 
 
         </div>
-        <div class="modal-dialog modal-frame modal-bottom" role="document" id="music-modal" style="width:100%; position: fixed">
-
-            <!-- Modal content-->
+        <div class="modal-dialog modal-frame modal-bottom fade" role="document" id="music-modal" style="width:100%; position: fixed">
             <div class="modal-content">
-                <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                <!--<h4 class="modal-title">Modal Header</h4>-->
-                <!--</div>-->
                 <div class="modal-body">
-                    <span id="prog"">
+                    <span id="prog">
                         <div class="progress">
-                            <div class="progress-bar bg-warning" id="songtime" role="progressbar" style="width: 0%; margin-bottom:10px" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar" id="songtime" role="progressbar" style="width: 0%; margin-bottom:10px; background-color:#aaaaaa!important" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </span>
                     <div>
                         <div class="col-sm" id="play">
                             <div class="col-sm btn-group" id="play">
                                 <button class="btn" id="play" onclick="previous()" style="background-color:#fbbb4b!important; border-color:#e4be00!important"><i class="fas fa-backward fa-align-center fa-lg" id="controls"></i></button>
-                                <button class="btn" id="play" onclick="pause()" style="background-color:#fbbb4b!important; border-color:#e4be00!important"><i class="fas fa-pause-circle fa-align-center fa-lg"></i></button>
-                                <button class="btn" id="play" onclick="play()" style="background-color:#fbbb4b!important; border-color:#e4be00!important"><i class="fas fa-play-circle fa-align-center fa-lg"></i></button>
-                                <button class="btn" id="play" onclick="next()" style="background-color:#fbbb4b!important; border-color:#e4be00!important"><i class="fas fa-forward fa-align-center fa-lg"></i></button>
+                                <button class="btn" id="play" onclick="toggle()" style="background-color:#fbbb4b!important; border-color:#e4be00!important"><i class="fas fa-align-center fa-lg" id="playpause"></i></button>
+                                <button class="btn" id="play" onclick="next()" style="background-color:#fbbb4b!important; border-color:#e4be00!important; width:"><i class="fas fa-forward fa-align-center fa-lg"></i></button>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
-                <!--<div class="modal-footer">-->
-                <!--</div>-->
             </div>
-
         </div>
 
     </body>
