@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+SC:500');
+html {
+    font-family: 'Noto Sans SC', serif;
+
+}
+body, html {
+    background-color: #F7F7F7;
+    height: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+}
+
+@-webkit-keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Standard syntax */
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.footer {
+    font-family: 'Noto Sans SC', serif;
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #fbbb4b;
+    color: black;
+    text-align: center;
+}
+ .logo {
+     width: 200px;
+     height: 100px;
+     margin-top: 1%;
+     margin-left: 40%;
+     -webkit-animation-name: fade; /* Safari 4.0 - 8.0 */
+     -webkit-animation-duration: 3s; /* Safari 4.0 - 8.0 */
+     animation-name: fade;
+     animation-duration: 3s;
+
+ }
+
+.jumboText {
+    font-family: 'Noto Sans SC', serif;
+    margin-top: 1%;
+    -webkit-animation-name: fade; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 3s; /* Safari 4.0 - 8.0 */
+    animation-name: fade;
+    animation-duration: 3s;
+
+}
+#spotify {
+    margin-top: 10%;
+    width: 100px;
+    height: 100px;
+    transition: all .2s ease-in-out;
+    -webkit-animation-name: fade; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 3s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-delay: 3s;
+    -webkit-animation-fill-mode: forwards;
+    animation-name: fade;
+    animation-duration: 3s;
+    animation-delay: 3s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+
+}
+#spotify:hover {
+    transform: scale(1.5);
+}
+#otherService {
+    margin-top: 10%;
+
+    width: 150px;
+    height: 150px;
+    transition: all .2s ease-in-out;
+    -webkit-animation-name: fade; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 3s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-delay: 3s;
+    -webkit-animation-fill-mode: forwards;
+    animation-name: fade;
+    animation-duration: 3s;
+    animation-delay: 3s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+#otherService:hover {
+    transform: scale(1.5);
+}
+h2 {
+
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#continue {
+    font-family: 'Noto Sans SC', serif;
+    display: block;
+    text-decoration: none; /* no underline */
+    color: gray;
+    position: absolute;
+    margin-top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-animation-name: fade; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-delay: 4s;
+    -webkit-animation-fill-mode: forwards;
+    animation-name: fade;
+    animation-duration: 4s;
+    animation-delay: 4s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}

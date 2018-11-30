@@ -3,11 +3,12 @@
 }
 
 #Login, #register {
-    background-color: gold;
-    border-color: #e4be00;
-    color: black;
+     background-color: gold;
+     border-color: #e4be00;
+     color: black;
 
-}
+ }
+
 body, html {
     background-image: url('images/background.png');
     -webkit-background-size: cover;
