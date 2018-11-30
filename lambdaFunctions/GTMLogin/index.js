@@ -121,15 +121,21 @@ function registerUser(event, callback) {
                 }
             }
         },
-        TableName: "MusicUsers"
+        ExpressionAttributeNames: {
+            "#u": "userid"
+        },
+        TableName: "MusicUsers",
+        ConditionExpression: "attribute_not_exists(#u)",
     };
 
     var response = {
         statusCode: 404,
         headers: {
             "Access-Control-Allow-Origin" : "*",
+            'Content-Type' : 'text/html'
         },
-    }
+        body: "failed"
+    };
 
     dynamodb.putItem(params, function(err, data) {
         if (err) {
