@@ -63,6 +63,10 @@ function handlePlay(event, callback) {
             if(data["Count"] == 1) {
                 console.log("found userid: " + data["Items"][0].userid.S)
                 console.log("found spotifyToken: " + JSON.stringify(data["Items"][0].spotifyInfo.M.access_token.S))
+                if(data["Items"][0].spotifyInfo.M.access_token.S) {
+                    callback(null,response)
+                    return
+                }
                 checkIfValid(data["Items"][0].userid.S, data["Items"][0].spotifyInfo.M, function(access_token) {
                     console.log("PLAY IN BROWSER WITH ACCESS TOKEN: " + access_token)
                     var options = {
@@ -72,7 +76,7 @@ function handlePlay(event, callback) {
                             'Content-Type': 'application/json'
                         }
                     };
-                    //console.log("this is the uri:" + uri)
+                    console.log("this is the uri:" + uri)
                     if(uri !== 'undefined') {
                         options = {
                             url: "https://api.spotify.com/v1/me/player/play?device_id=" + deviceID,
@@ -85,6 +89,7 @@ function handlePlay(event, callback) {
                     }
 
                     function reqcallback(error, response, body) {
+                        console.log(body)
                         if(err) {
                             console.log(err)
                             response = {
@@ -227,6 +232,10 @@ function handleAccessToken(event, callback) {
             if(data["Count"] == 1) {
                 console.log("found userid: " + data["Items"][0].userid.S)
                 console.log("found spotifyToken: " + JSON.stringify(data["Items"][0].spotifyInfo.M.access_token.S))
+                if(data["Items"][0].spotifyInfo.M.access_token.S) {
+                    callback(null,response)
+                    return
+                }
                 checkIfValid(data["Items"][0].userid.S, data["Items"][0].spotifyInfo.M, function(access_token) {
                     response = {
                         statusCode: 200,
@@ -289,6 +298,10 @@ function handlePause(event, callback) {
             if(data["Count"] == 1) {
                 console.log("found userid: " + data["Items"][0].userid.S)
                 console.log("found spotifyToken: " + JSON.stringify(data["Items"][0].spotifyInfo.M.access_token.S))
+                if(data["Items"][0].spotifyInfo.M.access_token.S) {
+                    callback(null,response)
+                    return
+                }
                 checkIfValid(data["Items"][0].userid.S, data["Items"][0].spotifyInfo.M, function(access_token) {
                     console.log("PAUSE IN BROWSER WITH ACCESS TOKEN: " + access_token)
                     var options = {
@@ -380,6 +393,10 @@ function handleNext(event, callback) {
             if(data["Count"] == 1) {
                 console.log("found userid: " + data["Items"][0].userid.S)
                 console.log("found spotifyToken: " + JSON.stringify(data["Items"][0].spotifyInfo.M.access_token.S))
+                if(data["Items"][0].spotifyInfo.M.access_token.S) {
+                    callback(null,response)
+                    return
+                }
                 checkIfValid(data["Items"][0].userid.S, data["Items"][0].spotifyInfo.M, function(access_token) {
                     console.log("NEXT IN BROWSER WITH ACCESS TOKEN: " + access_token)
                     var options = {
@@ -470,6 +487,10 @@ function handlePrevious(event, callback) {
             if(data["Count"] == 1) {
                 console.log("found userid: " + data["Items"][0].userid.S)
                 console.log("found spotifyToken: " + JSON.stringify(data["Items"][0].spotifyInfo.M.access_token.S))
+                if(data["Items"][0].spotifyInfo.M.access_token.S) {
+                    callback(null,response)
+                    return
+                }
                 checkIfValid(data["Items"][0].userid.S, data["Items"][0].spotifyInfo.M, function(access_token) {
                     console.log("NEXT IN BROWSER WITH ACCESS TOKEN: " + access_token)
                     var options = {
