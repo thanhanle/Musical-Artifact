@@ -18,6 +18,12 @@
                 var username = $("#uname1").val()
                 var password = $("#pwd1").val()
                 document.getElementById("register").innerHTML = "Registering...";
+
+                if(username.indexOf("@gatech.edu") < 1) {
+                    alert("You can only register with a Georgia Tech email.")
+                    return
+                }
+
                 if(username && password){
                     var xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function() {
@@ -30,7 +36,7 @@
                                 window.location.href = './streaming.html';
                             }
                         } else if(this.readyState == 4 && this.status == 404) {
-                            alert("Register failed " + this.status)
+                            alert("Register failed ")
                         }
                     };
                     xhttp.open("POST", registerPath, true);
@@ -88,7 +94,12 @@
                             <button class="btn btn-primary btn-lg float-right" id="register">register!</button>
                         </div>
                     </div>
+                    <div class="form-group" id="form-reg">
+                        <label><a href="login.html" style="color:gray; text-decoration: none;">already have an account? click me.</a></label>
+
+                    </div>
                 </div>
+
 
             </div>
         </div>
