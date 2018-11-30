@@ -82,8 +82,7 @@
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     if(this.responseText == 'failed') {
-                        alert("Could not find user")
-                        document.getElementById("Login").innerHTML = "Login";
+                        window.location = "./login.html"
                     } else {
                         data = JSON.parse(this.responseText);
 
@@ -143,14 +142,22 @@
 
                 let dataid = dataByVotes[i].id
                 trackNumber.onclick = function() {
-                    play(dataid)
-                    $("#myModal").modal();
+                    if(spotifyPlayer != null) {
+                        play(dataid)
+                        $("#myModal").modal();
+                    } else {
+                        alert("You must connect your Spotify premium account to play music")
+                    }
                 }
                 var title = document.createElement('td')
                 title.innerHTML = dataByVotes[i].artist
                 title.onclick = function() {
-                    play(dataid)
-                    $("#myModal").modal();
+                    if(spotifyPlayer != null) {
+                        play(dataid)
+                        $("#myModal").modal();
+                    } else {
+                        alert("You must connect your Spotify premium account to play music")
+                    }
                 }
                 var artist = document.createElement('td')
                 artist.innerHTML = dataByVotes[i].title
