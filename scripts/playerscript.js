@@ -3,41 +3,43 @@ var paused = false
 var spotifyPlayer = null
 
 window.onSpotifyWebPlaybackSDKReady = () => {
-    getAccessToken(function(accesstoken) {
-        const token = accesstoken
-        const player = new Spotify.Player({
-            name: 'Buzzy Beats',
-            getOAuthToken: cb => { cb(token); }
-        });
+    getAccessToken(function(err, accesstoken) {
+        if(!err && accesstoken) {
+            const token = accesstoken
+            const player = new Spotify.Player({
+                name: 'Buzzy Beats',
+                getOAuthToken: cb => { cb(token); }
+            });
 
-        spotifyPlayer = player
+            spotifyPlayer = player
 
-        // Error handling
-        player.addListener('initialization_error', ({ message }) => { console.error(message); });
-        player.addListener('authentication_error', ({ message }) => { console.error(message); });
-        player.addListener('account_error', ({ message }) => { console.error(message); });
-        player.addListener('playback_error', ({ message }) => { console.error(message); });
+            // Error handling
+            player.addListener('initialization_error', ({ message }) => { console.error(message); });
+            player.addListener('authentication_error', ({ message }) => { console.error(message); });
+            player.addListener('account_error', ({ message }) => { console.error(message); });
+            player.addListener('playback_error', ({ message }) => { console.error(message); });
 
-        // Playback status updates
-        player.addListener('player_state_changed', state => {
-            paused = state.paused
-            updateModal(state)
-            console.log(state);
-        });
+            // Playback status updates
+            player.addListener('player_state_changed', state => {
+                paused = state.paused
+                updateModal(state)
+                console.log(state);
+            });
 
-        // Ready
-        player.addListener('ready', ({ device_id }) => {
-            deviceID = device_id
-            console.log('Ready with Device ID', device_id);
-        });
+            // Ready
+            player.addListener('ready', ({ device_id }) => {
+                deviceID = device_id
+                console.log('Ready with Device ID', device_id);
+            });
 
-        // Not Ready
-        player.addListener('not_ready', ({ device_id }) => {
-            console.log('Device ID has gone offline', device_id);
-        });
+            // Not Ready
+            player.addListener('not_ready', ({ device_id }) => {
+                console.log('Device ID has gone offline', device_id);
+            });
 
-        // Connect to the player!
-        player.connect();
+            // Connect to the player!
+            player.connect();
+        }
     })
 
 };
@@ -48,9 +50,10 @@ function getAccessToken(callback) {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText)
-            callback(this.responseText)
+            callback(null, this.responseText)
         } else if(this.readyState == 4 && this.status == 404) {
             console.log("failed")
+            callback("failed", null)
         }
     };
     xhttp.open("POST", path, true);
