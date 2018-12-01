@@ -30,7 +30,7 @@
                 var hastoken = checkCookie("token")
                 console.log(hastoken)
                 if(hastoken) {
-                    window.location.href = './index.html';
+                    setCookie("token", "", 0)
                 }
 
                 $("#Login").click(function(){
