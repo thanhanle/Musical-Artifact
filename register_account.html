@@ -10,9 +10,30 @@
             var expires = "expires="+d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
         }
+    $(document).ready(function() {
+        $("#uname1").keypress(function(event) {
+            if (event.keyCode == 13 || event.which == 13) {
+                registerFunction()
+            }
+        });
+        $("#pwd1").keypress(function(event) {
+            if (event.keyCode == 13 || event.which == 13) {
+                registerFunction()
+            }
+        });
+        $("#cpwd1").keypress(function(event) {
+            if (event.keyCode == 13 || event.which == 13) {
+                registerFunction()
+            }
+        });
+        $("#register").click(function() {
+            registerFunction()
+        });
 
-        $(document).ready(function(){
-            $("#register").click(function(){
+        });
+
+        var registerFunction = function(){
+
                 console.log('registering')
                 var registerPath = APIADDRESS + "/GTMLogin/register"
 
@@ -44,8 +65,8 @@
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhttp.send("username=" + username + "&password=" + password);
                 }
-            });
-        });
+            }
+
 
     </script>
 
