@@ -1,5 +1,29 @@
+html, body {
+    background-image: url('images/background.png');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow: hidden;
+    height: 100%;
+    display: block;
+    width: 100%;
+    margin: 0;
+}
 #search_container{
     margin-top:20%; /* EDIT */
+    width: 50%;
+    font-family: 'Noto Sans SC', serif !important;
+
+}
+
+#title {
+    font-family: 'Noto Sans SC', serif !important;
+    font-size: 45px;
+    margin-top: 45px;
+    color: whitesmoke;
+    text-shadow: 1px 1px 1px black;
+
 }
 .input-group .input-group-addon{
     background: white !important;
@@ -18,7 +42,37 @@
     height: 25px;
     width: 25px;
 }
+#songList {
+    margin-top: 1rem;
+    font-family: 'Noto Sans SC', serif !important;
+    list-style-type: none;
+    text-decoration: none;
+    font-size: 18px;
+    padding-left:0px;
+    text-shadow: 1px 1px black;
+
+    background-color: rgba(255,255,255,.15);
+}
+a {
+    font-family: 'Noto Sans SC', serif !important;
+    list-style-type:none!important;
+    text-decoration: none!important;
+    color:whitesmoke!important;
+
+}
 
 #emoteRadio {
     margin-left: 25px;
+}
+
+#post {
+    font-family: 'Noto Sans SC', serif !important;
+    background-color: #fbbb4b !important;
+    border-color: #fbd40e!important;
+    box-shadow: 1px 1px 1px 1px black!important;
+
+}
+#close {
+    font-family: 'Noto Sans SC', serif !important;
+    box-shadow: 1px 1px 1px 1px black!important;
 }
