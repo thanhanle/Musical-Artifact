@@ -92,6 +92,12 @@
                         $("#user").attr({
                             "href" : null,
                         });
+                        var display = data.image_url;
+                        document.getElementById("display").src = display;
+                        // $("#display").attr({
+                        //     "href" : null,
+                        // });
+
                     }
 
 
@@ -152,6 +158,7 @@
                 }
                 var title = document.createElement('td')
                 title.innerHTML = dataByVotes[i].artist
+                title.style.cursor = 'pointer';
                 title.onclick = function() {
                     if(spotifyPlayer != null) {
                         play(dataid)
@@ -216,10 +223,10 @@
 
 
                 var updoot = document.createElement('i')
-                updoot.classList.add('fas', 'fa-arrow-circle-up')
+                updoot.classList.add('fas', 'fa-arrow-circle-up', 'fa-lg')
                 updoot.onclick = function() { upvote(dataid)}
                 var addPlay = document.createElement('i')
-                addPlay.classList.add('fas', 'fa-plus-circle')
+                addPlay.classList.add('fas', 'fa-plus-circle', 'fa-lg')
                 addPlay.onclick = function() { addSong(dataid)}
                 var genre = document.createElement('td')
                 genre.appendChild(updoot)
@@ -305,6 +312,7 @@
                     var trackNumber = document.createElement('td')
                     trackNumber.innerHTML = rank++
                     var title = document.createElement('td')
+                    title.style.cursor = 'pointer';
                     title.innerHTML = dataByVotes[i].artist
                     var artist = document.createElement('td')
                     artist.innerHTML = dataByVotes[i].title
@@ -452,13 +460,14 @@
         <!---->
         <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" id="navvy">
             <div>
-                <img class="logo" src="images/logo.png">
-                <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" id="nav-title">Buzzy Beats</a>
+                <img class="logo" src="images/logo2.png">
+                <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" id="nav-title"><h2 id="buzztitle">Buzzy Beats</h2></a>
             </div>
-            <ul class="navbar-nav px-3">
+            <ul class="navbar-nav px-3" id="userData">
                 <li class="nav-item text-nowrap">
-                    <a id="user" style="color:white"></a>
+                    <img id="display" src="" />
 
+                    <a id="user" style="color:white"></a>
                     <a class="nav-link" href="logout.html" id="logout" style="color:white">Sign out</a>
                 </li>
             </ul>
@@ -469,12 +478,12 @@
 
 
             <div class="row" style="margin-top: 5%">
-                <div class="col-sm-8"><h2 class="text-center">Top 100 Music</h2></div>
-                <div class="col-sm-4"><button class="btn btn-primary btn-sm" id="search" onclick="location.href = 'search.html'">Post</button></div>
+                <div class="col-sm-6" id="tableTitle"><h2 class="text-left" id="tableTitle">Top 100 Music</h2></div>
+                <div class="col-sm-6" id="searchButton"><button class="btn btn-primary" id="search" onclick="location.href = 'search.html'">Add Music</button></div>
             </div>
 
             <div class="row" id="musicTable">
-                <div class="col-md-12">
+                <div class="col-md-12" id="musicTable">
                     <table id="datatable" class="table table-striped table-bordered .thead-dark" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -494,16 +503,6 @@
 
                     </table>
                 </div>
-                <!--<div class="pagination">-->
-                  <!--<a href="#">&laquo;</a>-->
-                  <!--<a href="#">1</a>-->
-                  <!--<a href="#" class="active">2</a>-->
-                  <!--<a href="#">3</a>-->
-                  <!--<a href="#">4</a>-->
-                  <!--<a href="#">5</a>-->
-                  <!--<a href="#">6</a>-->
-                  <!--<a href="#">&raquo;</a>-->
-                <!--</div>-->
             </div>
 
 

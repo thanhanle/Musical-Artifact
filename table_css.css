@@ -3,29 +3,83 @@ html {
     font-family: 'Noto Sans SC', serif;
 
 }
-body {
-    background: url("images/IMG_2913.HEIC") !important;
+html, body {
+    background: url("images/tableback.svg") !important;
 }
 
 .logo {
-    width: 100px;
-    height: 65px;
-
+    width: 55px;
+    height: 45px;
+    padding-bottom: 15px;
+    margin-left: 1rem;
+    margin-right: .5rem;
+}
+#userData {
+    padding: 0 !important;
+}
+#display {
+    width: 75px;
+    height: 75px;
+    float:right;
+}
+#logout, #user {
+    padding: 0;
+    /*margin-right: 75px;*/
 }
 
 #nav-title {
     padding: 0;
+    font-size: 20px!important;
+    margin: 0 !important;;
+
+}
+#drop-down {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#datatable {
+    padding-top: 10px!important;
+}
+
+#search {
+    float:right;
+    margin-right: 0px;
+    box-shadow: 1px 1px 1px 1px black!important;
+    font-family: 'Noto Sans SC', serif !important;
+    background-color: #fbd40e !important;
+    border-color: #fbbb4b!important;
+    text-shadow: 1px 1px 1px black;
+
+
+}
+#searchButton{
+    padding-right: 0px;
+
 }
 
 #musicTable {
     background-color: white;
-    opacity: 1 !important;
+    box-shadow: 1px 1px 1px 1px gray;
+    font-family: 'Noto Sans SC', serif;
+    opacity: .75 !important;
 
 }
 #navvy {
     background: linear-gradient(to left, #fbbb4b 0%, #fbd40e 100%);
     font-family: 'Noto Sans SC', serif;
+    color: black!important;
+    text-shadow: 1px 1px 1px black;
+}
+
+#tableTitle {
+    font-family: 'Noto Sans SC', serif;
     color: whitesmoke;
+    margin-bottom: 0px;
+    padding-left: 0px;
+    text-shadow: 1px 1px 1px black;
+
+
 }
 
 .pagination>li {
