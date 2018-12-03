@@ -62,6 +62,9 @@
                 ul.setAttribute('id', 'songList');
                 var t;
                 var token = getCookie('token');
+                while (document.getElementById('search_data').firstChild) {
+                    document.getElementById('search_data').removeChild(document.getElementById('search_data').firstChild);
+                }
                 document.getElementById('search_data').appendChild(ul);
                 searchQuery = document.getElementById("search_input").value;
                 console.log(searchQuery);
