@@ -285,6 +285,14 @@
             xhttp.send("token=" + token + "&songID=" + songID + "&emotion=null");
         }
 
+        function goToSearch() {
+            if(spotifyPlayer == null) {
+                alert("You must connect Spotify to add music")
+                window.location = './streaming.html'
+            } else {
+                window.location = './search.html'
+            }
+        }
 
         function addSong(songID) {
             var postPath = APIADDRESS +  "/gtmsongs/addToPlaylist"
@@ -506,8 +514,8 @@
 
 
             <div class="row" style="margin-top: 5%">
-                <div class="col-sm-6" id="tableTitle"><h2 class="text-left" id="tableTitle">Top 100 Music</h2></div>
-                <div class="col-sm-6" id="searchButton"><button class="btn btn-primary" id="search" onclick="location.href = 'search.html'">Add Music</button></div>
+                <div class="col-sm-6" id="tableTitle"><h2 class="text-left" id="tableTitle">Top Music</h2></div>
+                <div class="col-sm-6" id="searchButton"><button class="btn btn-primary" id="search" onclick="goToSearch()">Add Music</button></div>
             </div>
 
             <div class="row" id="musicTable">
