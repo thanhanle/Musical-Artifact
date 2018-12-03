@@ -4,7 +4,7 @@ html {
 
 }
 body {
-    background-color: black !important;
+    background: url("images/IMG_2913.HEIC") !important;
 }
 
 .logo {
@@ -19,7 +19,7 @@ body {
 
 #musicTable {
     background-color: white;
-    opacity: .55 !important;
+    opacity: 1 !important;
 
 }
 #navvy {
