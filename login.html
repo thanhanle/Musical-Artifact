@@ -30,7 +30,7 @@
                 var hastoken = checkCookie("token")
                 console.log(hastoken)
                 if (hastoken) {
-                    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+                    document.cookie = "token=;0;path=/";
                 }
 
                 $("#pwd1").keypress(function(event) {
