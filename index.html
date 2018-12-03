@@ -93,7 +93,11 @@
                             "href" : null,
                         });
                         var display = data.image_url;
-                        document.getElementById("display").src = display;
+                        if(display !== "default") {
+                            document.getElementById("display").src = display;
+                        } else {
+                            document.getElementById("display").remove()
+                        }
                         // $("#display").attr({
                         //     "href" : null,
                         // });
@@ -169,19 +173,23 @@
                 }
                 var artist = document.createElement('td')
                 artist.innerHTML = dataByVotes[i].title
-                var votes = document.createElement('td')
-                votes.innerHTML = dataByVotes[i].votes
+                // var votes = document.createElement('td')
+                // votes.innerHTML = dataByVotes[i].votes
 
 
                 var emotions = document.createElement('td')
 
                 // console.log("Object.keys(dataByVotes[i].emotions).length")
-
+                // console.log(dataByVotes[i].emotions)
+                // console.log(title.innerHTML)
+                // console.log("numEmotions: " + numOfEmotions)
+                var numOfEmotions = Object.keys(dataByVotes[i].emotions).length
                 // console.log(title.innerHTML)
                 // console.log("numEmotions: " + numOfEmotions)
 
                 var emotionBuild = '';
                 var emotionCount = 0;
+
                 if (dataByVotes[i].emotions.happy != null) {
                     // emotions.innerHTML += 🙂
                     emotionBuild += String.fromCodePoint(0x1F601)
@@ -202,21 +210,25 @@
                 if (dataByVotes[i].emotions.null != null) {
                     emotionCount += parseInt(dataByVotes[i].emotions.null.N)
                 }
-                if (dataByVotes[i].emotions.chill !== null) {
+                if (dataByVotes[i].emotions.chill != null) {
                     // emotions.innerHTML += 😥
-                    emotions.innerHTML += "" + String.fromCodePoint(0x1F622)
+                    emotionBuild += "" + String.fromCodePoint(0x1f60e)
+                    emotionCount += parseInt(dataByVotes[i].emotions.chill.N)
                 }
-                if (dataByVotes[i].emotions.romantic !== null) {
+                if (dataByVotes[i].emotions.romantic != null) {
                     // emotions.innerHTML += 😥
-                    emotions.innerHTML += "" + String.fromCodePoint(0x1F622)
+                    emotionBuild += "" + String.fromCodePoint(0x1f60d)
+                    emotionCount += parseInt(dataByVotes[i].emotions.romantic.N)
                 }
-                if (dataByVotes[i].emotions.excited !== null) {
+                if (dataByVotes[i].emotions.excited != null) {
                     // emotions.innerHTML += 😥
-                    emotions.innerHTML += "" + String.fromCodePoint(0x1F622)
+                    emotionBuild += "" + String.fromCodePoint(0x1f60b)
+                    emotionCount += parseInt(dataByVotes[i].emotions.excited.N)
                 }
-                if (dataByVotes[i].emotions.haha !== null) {
+                if (dataByVotes[i].emotions.funny != null) {
                     // emotions.innerHTML += 😥
-                    emotions.innerHTML += "" + String.fromCodePoint(0x1F622)
+                    emotionBuild += "" + String.fromCodePoint(0x1f606)
+                    emotionCount += parseInt(dataByVotes[i].emotions.funny.N)
                 }
                 emotions.innerHTML = emotionBuild + " " + emotionCount
 
@@ -244,7 +256,7 @@
                 newRow.appendChild(trackNumber)
                 newRow.appendChild(title)
                 newRow.appendChild(artist)
-                newRow.appendChild(votes)
+                // newRow.appendChild(votes)
                 newRow.appendChild(emotions)
                 newRow.appendChild(genre)
 
@@ -316,43 +328,59 @@
                     title.innerHTML = dataByVotes[i].artist
                     var artist = document.createElement('td')
                     artist.innerHTML = dataByVotes[i].title
-                    var votes = document.createElement('td')
-                    votes.innerHTML = dataByVotes[i].votes
+                    // var votes = document.createElement('td')
+                    // votes.innerHTML = dataByVotes[i].votes
                     var emotions = document.createElement('td')
 
                     var numOfEmotions = Object.keys(dataByVotes[i].emotions).length
                     console.log(title.innerHTML)
                     console.log("numEmotions: " + numOfEmotions)
-                    for (var x = 0; x < 8; x++) {
-                        if (dataByVotes[i].emotions.happy !== null) {
-                            // emotions.innerHTML += 🙂
-                            emotions.innerHTML = "" + String.fromCodePoint(0x1F601)
-                        }
-                        if (dataByVotes[i].emotions.angry !== null) {
-                            // emotions.innerHTML += 😠
-                            emotions.innerHTML = "" + String.fromCodePoint(0x1F621)
-                        }
-                        if (dataByVotes[i].emotions.sad !== null) {
-                            // emotions.innerHTML += 😥
-                            emotions.innerHTML += "" + String.fromCodePoint(0x1F622)
-                        }
-                        if (dataByVotes[i].emotions.chill !== null) {
-                            // emotions.innerHTML += 😥
-                            emotions.innerHTML += "" + String.fromCodePoint(0x1F60E)
-                        }
-                        if (dataByVotes[i].emotions.romantic !== null) {
-                            // emotions.innerHTML += 😥
-                            emotions.innerHTML += "" + String.fromCodePoint(0x1F60D)
-                        }
-                        if (dataByVotes[i].emotions.excited !== null) {
-                            // emotions.innerHTML += 😥
-                            emotions.innerHTML += "" + String.fromCodePoint(0x1F60B)
-                        }
-                        if (dataByVotes[i].emotions.haha !== null) {
-                            // emotions.innerHTML += 😥
-                            emotions.innerHTML += "" + String.fromCodePoint(0x1F602)
-                        }
+
+                    var emotionBuild = '';
+                    var emotionCount = 0;
+
+                    if (dataByVotes[i].emotions.happy != null) {
+                        // emotions.innerHTML += 🙂
+                        emotionBuild += String.fromCodePoint(0x1F601)
+                        emotionCount += parseInt(dataByVotes[i].emotions.happy.N)
                     }
+                    if (dataByVotes[i].emotions.angry !=  null) {
+                        // emotions.innerHTML += 😠
+                        emotionBuild += " " + String.fromCodePoint(0x1F621)
+                        emotionCount += parseInt(dataByVotes[i].emotions.angry.N)
+
+                    }
+                    if (dataByVotes[i].emotions.sad != null) {
+                        // emotions.innerHTML += 😥
+                        emotionBuild += " " + String.fromCodePoint(0x1F622)
+                        emotionCount += parseInt(dataByVotes[i].emotions.sad.N)
+
+                    }
+                    if (dataByVotes[i].emotions.null != null) {
+                        emotionCount += parseInt(dataByVotes[i].emotions.null.N)
+                    }
+                    if (dataByVotes[i].emotions.chill != null) {
+                        // emotions.innerHTML += 😥
+                        emotionBuild += "" + String.fromCodePoint(0x1f60e)
+                        emotionCount += parseInt(dataByVotes[i].emotions.chill.N)
+                    }
+                    if (dataByVotes[i].emotions.romantic != null) {
+                        // emotions.innerHTML += 😥
+                        emotionBuild += "" + String.fromCodePoint(0x1f60d)
+                        emotionCount += parseInt(dataByVotes[i].emotions.romantic.N)
+                    }
+                    if (dataByVotes[i].emotions.excited != null) {
+                        // emotions.innerHTML += 😥
+                        emotionBuild += "" + String.fromCodePoint(0x1f60b)
+                        emotionCount += parseInt(dataByVotes[i].emotions.excited.N)
+                    }
+                    if (dataByVotes[i].emotions.funny != null) {
+                        // emotions.innerHTML += 😥
+                        emotionBuild += "" + String.fromCodePoint(0x1f606)
+                        emotionCount += parseInt(dataByVotes[i].emotions.funny.N)
+                    }
+
+                    emotions.innerHTML = emotionBuild + " " + emotionCount
 
                     var genre = document.createElement('td')
                     genre.innerHTML = dataByVotes[i].genre
@@ -362,7 +390,7 @@
                     newRow.appendChild(trackNumber)
                     newRow.appendChild(title)
                     newRow.appendChild(artist)
-                    newRow.appendChild(votes)
+                    // newRow.appendChild(votes)
                     newRow.appendChild(emotions)
                     newRow.appendChild(genre)
                     rows.append(newRow);
@@ -490,7 +518,7 @@
                                 <th>Rank</th>
                                 <th>Songs</th>
                                 <th>Artists</th>
-                                <th>Votes</th>
+                                <!-- <th>Votes</th> -->
                                 <th>Emotions</th>
                                 <th></th>
                             </tr>
