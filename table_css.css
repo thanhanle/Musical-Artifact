@@ -1,3 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+SC:500');
+html {
+    font-family: 'Noto Sans SC', serif;
+
+}
+body {
+    background-color: black !important;
+}
+
+.logo {
+    width: 100px;
+    height: 65px;
+
+}
+
+#nav-title {
+    padding: 0;
+}
+
+#musicTable {
+    background-color: white;
+    opacity: .55 !important;
+
+}
+#navvy {
+    background: linear-gradient(to left, #fbbb4b 0%, #fbd40e 100%);
+    font-family: 'Noto Sans SC', serif;
+    color: whitesmoke;
+}
+
 .pagination>li {
     display: inline;
     padding:0px !important;
